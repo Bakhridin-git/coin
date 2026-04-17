@@ -1,0 +1,435 @@
+/* Global header + mobile drawer styles.
+ *
+ * Previously these lived inside `.catalog-scope` (catalog.css) and
+ * `.coin-detail-scope` (coin-detail.css), but the header is now mounted in
+ * the root layout, OUTSIDE every page scope. To keep header markup working
+ * across all routes, the rules are extracted here without any scope prefix.
+ *
+ * Rules below mirror the desktop + mobile layouts from catalog.css so no
+ * visual regressions — they are just un-scoped.
+ */
+
+header {
+  background: #fff;
+  border-bottom: 1px solid #e8e6e0;
+  padding: 0;
+}
+
+.header-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 20px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.header-top * {
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: #1a1a2e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a84c;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.logo-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.3px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.search-bar-wrap {
+  position: relative;
+  flex: 0 0 560px;
+  width: 560px;
+  max-width: 100%;
+  align-self: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f5f4f0;
+  border: 1px solid #e0ddd6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  gap: 10px;
+  width: 100%;
+  margin-top: 0;
+}
+
+.search-suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #e0ddd6;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(17, 20, 33, 0.12);
+  z-index: 60;
+  max-height: min(360px, 52vh);
+  overflow-y: auto;
+}
+
+.search-suggest-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #1a1a2e;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.search-suggest-item:hover,
+.search-suggest-item.is-active {
+  background: #faf9f7;
+}
+
+.search-suggest-item:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: -2px;
+}
+
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  width: 100%;
+  font-family: inherit;
+}
+
+.search-bar input::placeholder {
+  color: #aaa;
+}
+
+nav.main-nav {
+  border-top: 1px solid #f0ede6;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.nav-overlay {
+  display: none;
+}
+
+.drawer-header {
+  display: none;
+}
+
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.burger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #1a1a2e;
+  border-radius: 2px;
+}
+
+.header-actions {
+  display: none;
+  align-items: center;
+  margin-left: auto;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  color: #1a1a2e;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  display: block;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-list a:hover {
+  color: #1a1a2e;
+}
+
+.nav-list a.active {
+  color: #1a1a2e;
+  border-bottom-color: #c9a84c;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 16px;
+  }
+
+  .header-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 14px 52px;
+    max-width: none;
+    margin: 0;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+
+  .logo {
+    min-width: 0;
+  }
+
+  .logo-title {
+    font-size: 16px;
+  }
+
+  .logo-sub {
+    display: none;
+  }
+
+  .search-bar-wrap {
+    display: none;
+  }
+
+  /* Раскрытое мобильное поле поиска — отдельная строка под шапкой.
+   * Абсолютное позиционирование, чтобы не ломать flex `.header-top`:
+   * лого остаётся по центру, бургер и лупа — на своих местах. */
+  header.search-open .search-bar-wrap {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    flex: none;
+    margin: 0;
+    max-width: none;
+    z-index: 45;
+    box-shadow: 0 8px 20px rgba(17, 20, 33, 0.06);
+  }
+
+  header.search-open .search-bar {
+    display: flex;
+    padding: 10px 16px;
+    border: none;
+    border-top: 1px solid #e8e6e0;
+    border-radius: 0;
+    background: #fff;
+  }
+
+  header.search-open .search-suggest {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+    box-shadow: 0 16px 28px rgba(17, 20, 33, 0.1);
+  }
+
+  .burger-btn {
+    display: flex;
+  }
+
+  .header-actions {
+    display: flex;
+  }
+
+  .burger-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .header-actions {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 20, 34, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 40;
+  }
+
+  .nav-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav.main-nav {
+    display: block;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    width: min(320px, 86vw);
+    height: calc(100vh - 73px);
+    background: #fff;
+    border-top: none;
+    border-right: 1px solid #e8e6e0;
+    box-shadow: 12px 0 40px rgba(17, 20, 33, 0.14);
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 50;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  nav.main-nav.open {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 16px 14px;
+    border-bottom: 1px solid #f0ede6;
+  }
+
+  .drawer-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .drawer-close {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e8e6e0;
+    border-radius: 10px;
+    background: #fff;
+    color: #1a1a2e;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .nav-list {
+    flex-direction: column;
+  }
+
+  .nav-list a {
+    position: relative;
+    padding: 18px 48px 18px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #36394b;
+    border-bottom: 1px solid #f5f4f0;
+  }
+
+  .nav-list a::after {
+    content: '›';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c7c3bb;
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .nav-list a.active {
+    border-bottom-color: #f5f4f0;
+    border-left: 3px solid #c9a84c;
+    background: #faf9f7;
+    color: #1a1a2e;
+    font-weight: 700;
+  }
+}
+
+/* Страховка: шапка всегда строка (Tailwind/base не должен складывать в колонку). */
+header .header-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+

@@ -1,0 +1,491 @@
+/* Full-width block above the two-column area — breadcrumb + H1 + subtitle.
+ * Same max-width / horizontal padding as .main so the left edge of the title
+ * lines up with the left edge of the category sidebar.
+ */
+.catalog-scope .catalog-head {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 40px 0;
+}
+
+.catalog-scope .catalog-head .breadcrumb {
+  margin-bottom: 8px;
+}
+
+.catalog-scope .catalog-head .content-header {
+  margin-bottom: 0;
+}
+
+.catalog-scope .content-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #888;
+  line-height: 1.4;
+}
+
+/* Pull the two-column area flush against the head — the visual stack becomes
+ * [breadcrumb + title] then [sidebar | filter bar + grid] aligned at the top. */
+.catalog-scope .main {
+  padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .catalog-scope .catalog-head {
+    padding: 16px 16px 0;
+  }
+
+  .catalog-scope .catalog-head .breadcrumb {
+    display: none;
+  }
+
+  .catalog-scope .main {
+    padding-top: 12px;
+  }
+}
+
+/* Filter bar — desktop-only dropdown row that replaces the sidebar. Mobile keeps
+ * the modal sidebar, so we hide the bar < 769px and the sidebar on ≥ 769px.
+ */
+
+.catalog-scope .filter-bar {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .catalog-scope .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .catalog-scope .sidebar {
+    display: none !important;
+  }
+}
+
+.catalog-scope .filter-dd {
+  position: relative;
+}
+
+.catalog-scope .filter-dd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  line-height: 1;
+}
+
+.catalog-scope .filter-dd-btn:hover {
+  border-color: #c9a84c;
+}
+
+.catalog-scope .filter-dd-btn.is-open {
+  border-color: #c9a84c;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18);
+}
+
+.catalog-scope .filter-dd-btn.is-active {
+  background: #c9a84c;
+  border-color: #c9a84c;
+  color: #1a1a2e;
+}
+
+.catalog-scope .filter-dd-chev {
+  transition: transform 0.2s ease;
+  color: currentColor;
+  opacity: 0.7;
+}
+
+.catalog-scope .filter-dd-btn.is-open .filter-dd-chev {
+  transform: rotate(180deg);
+}
+
+.catalog-scope .filter-dd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.catalog-scope .filter-dd-btn.is-active .filter-dd-badge {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.catalog-scope .filter-dd-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 260px;
+  max-width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(17, 20, 33, 0.1);
+  padding: 8px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.catalog-scope .filter-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #1a1a2e;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+.catalog-scope .filter-dd-item:hover {
+  background: #faf9f7;
+}
+
+.catalog-scope .filter-dd-item.is-active {
+  background: #c9a84c;
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+.catalog-scope .filter-dd-item.is-active .filter-dd-count {
+  color: rgba(26, 26, 46, 0.55);
+}
+
+.catalog-scope .filter-dd-item input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #c9a84c;
+  flex-shrink: 0;
+}
+
+.catalog-scope .filter-dd-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.catalog-scope .filter-dd-count {
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.catalog-scope .filter-bar-reset {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #888;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 8px;
+}
+
+.catalog-scope .filter-bar-reset:hover {
+  color: #1a1a2e;
+}
+
+.catalog-scope .filter-dd-icon {
+  display: inline-flex;
+  align-items: center;
+  color: currentColor;
+  opacity: 0.9;
+}
+
+.catalog-scope .filter-dd-btn--sort {
+  background: #c9a84c;
+  border-color: #c9a84c;
+  color: #1a1a2e;
+}
+
+.catalog-scope .filter-dd-btn--sort:hover {
+  background: #b89340;
+  border-color: #b89340;
+}
+
+.catalog-scope .filter-dd-btn--sort.is-open {
+  background: #b89340;
+  border-color: #b89340;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.22);
+}
+
+.catalog-scope .filter-dd-btn--sort .filter-dd-chev {
+  opacity: 0.9;
+}
+
+/* Year range filter
+ *
+ * A dual-handle slider made from two absolutely-positioned <input type="range">
+ * elements sharing one track. Handles are individually clickable via
+ * `pointer-events: auto` on the thumbs only; the inputs themselves capture no
+ * pointer so they don't cover each other. The colored active segment is a
+ * plain <div> positioned based on the current from/to percentages.
+ */
+
+.catalog-scope .filter-dd-panel--wide {
+  min-width: 320px;
+  max-width: 360px;
+  padding: 16px;
+  gap: 0;
+}
+
+.catalog-scope .year-range {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 280px;
+}
+
+.catalog-scope .year-range-slider {
+  position: relative;
+  height: 24px;
+  margin: 4px 10px 4px;
+}
+
+.catalog-scope .year-range-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: translateY(-50%);
+  background: #e8e6e0;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.catalog-scope .year-range-active {
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  transform: translateY(-50%);
+  background: #c9a84c;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.catalog-scope .year-range-slider input[type='range'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: none;
+}
+
+.catalog-scope .year-range-slider input[type='range']:focus {
+  outline: none;
+}
+
+.catalog-scope .year-range-slider input[type='range']::-webkit-slider-runnable-track {
+  background: transparent;
+  border: none;
+  height: 100%;
+}
+
+.catalog-scope .year-range-slider input[type='range']::-webkit-slider-thumb {
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  box-shadow: 0 1px 3px rgba(17, 20, 33, 0.2);
+  cursor: pointer;
+  margin-top: 0;
+}
+
+.catalog-scope .year-range-slider input[type='range']::-moz-range-track {
+  background: transparent;
+  border: none;
+  height: 100%;
+}
+
+.catalog-scope .year-range-slider input[type='range']::-moz-range-thumb {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  box-shadow: 0 1px 3px rgba(17, 20, 33, 0.2);
+  cursor: pointer;
+}
+
+.catalog-scope .year-range-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.catalog-scope .year-range-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+  color: #1a1a2e;
+  transition: border-color 0.15s ease;
+}
+
+.catalog-scope .year-range-field:focus-within {
+  border-color: #c9a84c;
+}
+
+.catalog-scope .year-range-prefix,
+.catalog-scope .year-range-suffix {
+  color: #888;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.catalog-scope .year-range-field input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.catalog-scope .year-range-field input::-webkit-inner-spin-button,
+.catalog-scope .year-range-field input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.catalog-scope .year-range-field input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.catalog-scope .year-range-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.catalog-scope .year-range-btn {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #e8e6e0;
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.catalog-scope .year-range-btn:hover {
+  border-color: #c9a84c;
+}
+
+.catalog-scope .year-range-btn--primary {
+  background: #c9a84c;
+  border-color: #c9a84c;
+  color: #1a1a2e;
+}
+
+.catalog-scope .year-range-btn--primary:hover {
+  background: #b89340;
+  border-color: #b89340;
+}
+
+/* Mobile sidebar year fields (same visual language, single column). */
+.catalog-scope .filter-year-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.catalog-scope .filter-year-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+  color: #1a1a2e;
+}
+
+.catalog-scope .filter-year-field:focus-within {
+  border-color: #c9a84c;
+}
+
+.catalog-scope .filter-year-field span {
+  color: #888;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.catalog-scope .filter-year-field input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.catalog-scope .filter-year-field input::-webkit-inner-spin-button,
+.catalog-scope .filter-year-field input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.catalog-scope .filter-year-field input[type='number'] {
+  -moz-appearance: textfield;
+}

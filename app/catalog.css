@@ -1,0 +1,953 @@
+/* Auto-generated from preview.html. Do not edit directly. */
+
+    /* Не обнуляем padding у всех потомков — иначе перебиваются стили
+     * components/CategoryTree.css (.cat-tree-link, .cat-sidebar .cat-tree)
+     * при той же специфичности и ломаются отступы в дереве категорий. */
+    .catalog-scope {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .catalog-scope * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .catalog-scope {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f4f0;
+      color: #1a1a1a;
+    }
+
+    /* HEADER */
+    .catalog-scope header {
+      background: #fff;
+      border-bottom: 1px solid #e8e6e0;
+      padding: 0;
+    }
+
+    .catalog-scope .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+      padding: 20px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .catalog-scope .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .catalog-scope .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #1a1a2e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a84c;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .catalog-scope .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .catalog-scope .logo-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+      letter-spacing: -0.3px;
+    }
+
+    .catalog-scope .logo-sub {
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .catalog-scope .search-bar {
+      display: flex;
+      align-items: center;
+      background: #f5f4f0;
+      border: 1px solid #e0ddd6;
+      border-radius: 8px;
+      padding: 10px 16px;
+      gap: 10px;
+      width: 560px;
+      flex: 0 0 560px;
+      margin-top: 0;
+      align-self: center;
+    }
+
+    .catalog-scope .search-bar input {
+      border: none;
+      background: none;
+      outline: none;
+      font-size: 14px;
+      color: #1a1a1a;
+      width: 100%;
+    }
+
+    .catalog-scope .search-bar input::placeholder { color: #aaa; }
+
+    /* NAV */
+    .catalog-scope nav.main-nav {
+      border-top: 1px solid #f0ede6;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .catalog-scope .nav-overlay {
+      display: none;
+    }
+
+    .catalog-scope .drawer-header {
+      display: none;
+    }
+
+    .catalog-scope .burger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .catalog-scope .burger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #1a1a2e;
+      border-radius: 2px;
+    }
+
+    .catalog-scope .header-actions {
+      display: none;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .catalog-scope .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid #e8e6e0;
+      border-radius: 10px;
+      color: #1a1a2e;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .catalog-scope .nav-list {
+      display: flex;
+      list-style: none;
+    }
+
+    .catalog-scope .nav-list a {
+      display: block;
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .catalog-scope .nav-list a:hover { color: #1a1a2e; }
+    .catalog-scope .nav-list a.active {
+      color: #1a1a2e;
+      border-bottom-color: #c9a84c;
+      font-weight: 600;
+    }
+
+    /* MAIN LAYOUT */
+    .catalog-scope .main {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 40px;
+      gap: 32px;
+    }
+
+    /* SIDEBAR
+     *
+     * На десктопе фильтры представлены горизонтальным FilterBar над списком
+     * монет (dropdown-кнопки), поэтому вертикальный сайдбар с чекбоксами
+     * не нужен — он отъедал ширину у коллекции и ломал сетку на ноутбучных
+     * разрешениях (~1024px, где слева ещё стоит дерево категорий 280px).
+     * Сайдбар остаётся только как мобильный drawer — см. `@media` ниже. */
+    .catalog-scope .sidebar {
+      display: none;
+    }
+
+    .catalog-scope .filter-overlay, .catalog-scope .sidebar-header, .catalog-scope .sidebar-footer {
+      display: none;
+    }
+
+    .catalog-scope .sort-overlay, .catalog-scope .sort-sheet {
+      display: none;
+    }
+
+    .catalog-scope .filter-group {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      border: 1px solid #e8e6e0;
+    }
+
+    .catalog-scope .filter-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #888;
+      margin-bottom: 14px;
+    }
+
+    .catalog-scope .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      cursor: pointer;
+    }
+
+    .catalog-scope .filter-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #c9a84c;
+      cursor: pointer;
+    }
+
+    .catalog-scope .filter-option label {
+      font-size: 13px;
+      color: #444;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .catalog-scope .filter-count { color: #bbb; font-size: 12px; }
+
+    .catalog-scope .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e0ddd6;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #444;
+      background: #f5f4f0;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* CONTENT */
+    .catalog-scope .content { flex: 1; min-width: 0; }
+
+    .catalog-scope .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    .catalog-scope .breadcrumb a { color: #aaa; text-decoration: none; }
+    .catalog-scope .breadcrumb a:hover { color: #1a1a2e; }
+    .catalog-scope .breadcrumb span { color: #1a1a2e; font-weight: 500; }
+
+    .catalog-scope .content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .catalog-scope .content-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      letter-spacing: -0.3px;
+    }
+
+    .catalog-scope .content-count {
+      display: inline-block;
+      background: #f0ede6;
+      color: #888;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-left: 10px;
+      font-weight: 500;
+    }
+
+    .catalog-scope .sort-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .catalog-scope .sort-select {
+      padding: 6px 12px;
+      border: 1px solid #e0ddd6;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #444;
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .catalog-scope .mobile-actions {
+      display: none;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .catalog-scope .mobile-button {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border: 1px solid #e0ddd6;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a2e;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .catalog-scope .mobile-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      min-width: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #1a1a2e;
+      border: 1px solid #1a1a2e;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .catalog-scope .sort-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid #f0ede6;
+      flex-shrink: 0;
+    }
+
+    .catalog-scope .sort-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a2e;
+      letter-spacing: -0.2px;
+    }
+
+    .catalog-scope .sort-close {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e8e6e0;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a2e;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .catalog-scope .sort-list {
+      list-style: none;
+      margin: 0;
+      padding: 8px 0;
+    }
+
+    .catalog-scope .sort-item {
+      width: 100%;
+      text-align: left;
+      display: block;
+      padding: 14px 20px;
+      background: transparent;
+      border: 0;
+      font-family: inherit;
+      font-size: 18px;
+      color: #1a1a2e;
+      cursor: pointer;
+    }
+
+    .catalog-scope .sort-item.is-active {
+      background: #c9a84c;
+      color: #1a1a2e;
+      font-weight: 700;
+    }
+
+    /* COIN GRID */
+    .catalog-scope .coin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* COIN CARD */
+    .catalog-scope .coin-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e8e6e0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .catalog-scope .coin-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    .catalog-scope .coin-image-wrap {
+      position: relative;
+      /* Совпадает с белым фоном фото в JPEG — иначе виден прямоугольник */
+      background: #fff;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .catalog-scope .coin-image-wrap img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+
+    .catalog-scope .coin-card:hover .coin-image-wrap img {
+      transform: scale(1.05);
+    }
+
+    .catalog-scope .coin-flip-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(26,26,46,0.7);
+      color: #fff;
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .catalog-scope .coin-card:hover .coin-flip-hint { opacity: 1; }
+
+    .catalog-scope .coin-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #1a1a2e;
+      color: #c9a84c;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .catalog-scope .coin-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .catalog-scope .coin-series {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #c9a84c;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .catalog-scope .coin-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 0;
+      letter-spacing: -0.2px;
+      line-height: 1.35;
+      width: 100%;
+    }
+
+    .catalog-scope .coin-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .catalog-scope .coin-tag {
+      background: #f5f4f0;
+      color: #666;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    /* PLACEHOLDER */
+    .catalog-scope .coin-card.placeholder {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .catalog-scope .placeholder-img {
+      width: 80%;
+      height: 80%;
+      background: #e0ddd6;
+      border-radius: 50%;
+    }
+
+    .catalog-scope .placeholder-line {
+      height: 12px;
+      background: #f0ede6;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .catalog-scope .placeholder-line.short { width: 60%; }
+
+    @media (max-width: 768px) {
+      .catalog-scope header { padding: 0 16px; }
+      .catalog-scope .header-top {
+        padding: 14px 52px;
+        max-width: none;
+        margin: 0;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+      }
+      .catalog-scope .logo { min-width: 0; }
+      .catalog-scope .logo-title { font-size: 16px; }
+      .catalog-scope .logo-sub { display: none; }
+      .catalog-scope .search-bar { display: none; }
+      .catalog-scope .burger-btn { display: flex; }
+      .catalog-scope .header-actions { display: flex; }
+
+      .catalog-scope .burger-btn {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .catalog-scope .header-actions {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .catalog-scope .nav-overlay {
+        display: block;
+        position: fixed;
+        top: 73px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(18, 20, 34, 0.28);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 40;
+      }
+
+      .catalog-scope .nav-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .catalog-scope nav.main-nav {
+        display: block;
+        position: fixed;
+        top: 73px;
+        left: 0;
+        width: min(320px, 86vw);
+        height: calc(100vh - 73px);
+        background: #fff;
+        border-top: none;
+        border-right: 1px solid #e8e6e0;
+        box-shadow: 12px 0 40px rgba(17, 20, 33, 0.14);
+        transform: translateX(-100%);
+        transition: transform 0.28s ease;
+        z-index: 50;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .catalog-scope nav.main-nav.open {
+        transform: translateX(0);
+      }
+
+      .catalog-scope .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 16px 14px;
+        border-bottom: 1px solid #f0ede6;
+      }
+
+      .catalog-scope .drawer-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1a1a2e;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+
+      .catalog-scope .drawer-close {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e8e6e0;
+        border-radius: 10px;
+        background: #fff;
+        color: #1a1a2e;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .catalog-scope .nav-list { flex-direction: column; }
+      .catalog-scope .nav-list a {
+        position: relative;
+        padding: 18px 48px 18px 20px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #36394b;
+        border-bottom: 1px solid #f5f4f0;
+      }
+
+      .catalog-scope .nav-list a::after {
+        content: "›";
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #c7c3bb;
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .catalog-scope .nav-list a.active {
+        border-bottom-color: #f5f4f0;
+        border-left: 3px solid #c9a84c;
+        background: #faf9f7;
+        color: #1a1a2e;
+        font-weight: 700;
+      }
+
+      .catalog-scope .main {
+        flex-direction: column;
+        padding: 16px 16px 40px;
+        gap: 16px;
+      }
+
+      .catalog-scope .filter-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 20, 34, 0.28);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 55;
+      }
+
+      .catalog-scope .filter-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .catalog-scope .sidebar {
+        display: none;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+        z-index: 60;
+        flex-direction: column;
+      }
+
+      .catalog-scope .sidebar.open {
+        display: flex;
+      }
+
+      .catalog-scope .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 20px;
+        border-bottom: 1px solid #f0ede6;
+        flex-shrink: 0;
+      }
+
+      .catalog-scope .sidebar-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1a1a2e;
+      }
+
+      .catalog-scope .sidebar-close {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e8e6e0;
+        border-radius: 10px;
+        background: #fff;
+        color: #1a1a2e;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      .catalog-scope .sidebar-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 20px 20px;
+      }
+
+      .catalog-scope .filter-group { padding: 16px; }
+
+      .catalog-scope .sidebar-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+        border-top: 1px solid #f0ede6;
+        background: #fff;
+        flex-shrink: 0;
+      }
+
+      .catalog-scope .sidebar-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 16px;
+        border-radius: 10px;
+        border: 1px solid #e0ddd6;
+        background: #fff;
+        color: #1a1a2e;
+        font-size: 15px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .catalog-scope .sidebar-action--primary {
+        background: #c9a84c;
+        border-color: #c9a84c;
+        color: #1a1a2e;
+      }
+
+      .catalog-scope .content { width: 100%; }
+      .catalog-scope .breadcrumb { display: none; }
+      /* Сетку кнопок задаём теми же параметрами, что и `.coin-grid` ниже:
+       * `repeat(2, minmax(0, 1fr))` + `gap: 12px`. Так пара кнопок занимает
+       * ровно ту же ширину и имеет ровно те же зазоры, что и пара карточек
+       * монет под ними — визуально всё выровнено по одной сетке. */
+      .catalog-scope .mobile-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+      }
+
+      .catalog-scope .mobile-actions .mobile-button {
+        /* Сбрасываем flex: 1 из десктопной заготовки — в grid-ячейке он не
+         * нужен и может мешать, когда содержимое уже чем ячейка. */
+        flex: initial;
+        width: 100%;
+        margin: 0;
+        background: #c9a84c;
+        border-color: #c9a84c;
+        color: #1a1a2e;
+        justify-content: center;
+        height: 48px;
+        padding: 0 12px;
+        gap: 6px;
+        min-width: 0;
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .catalog-scope .mobile-actions .mobile-button > span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .catalog-scope .mobile-actions .mobile-button__inner {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .catalog-scope .mobile-sort-select {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .catalog-scope .sort-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 20, 34, 0.28);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 65;
+      }
+
+      .catalog-scope .sort-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .catalog-scope .sort-sheet {
+        display: block;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 70;
+      }
+
+      .catalog-scope .sort-sheet.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .catalog-scope .content-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .catalog-scope .content-title {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 12px;
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      .catalog-scope .content-count {
+        display: inline-flex;
+        margin: 0;
+        width: fit-content;
+      }
+
+      .catalog-scope .sort-bar {
+        justify-content: space-between;
+        font-size: 14px;
+      }
+
+      .catalog-scope .sort-select {
+        flex: 1;
+        max-width: 180px;
+      }
+
+      .catalog-scope .coin-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .catalog-scope .coin-info { padding: 14px; }
+      .catalog-scope .coin-series { font-size: 9px; margin-bottom: 6px; }
+      .catalog-scope .coin-name { font-size: 14px; }
+      .catalog-scope .coin-meta { gap: 5px; }
+      .catalog-scope .coin-tag { font-size: 10px; }
+      /* На мобиле хинт перекрывает монету и выглядит как «кнопка». Убираем. */
+      .catalog-scope .coin-flip-hint { display: none; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+      .catalog-scope .main {
+        padding: 24px;
+        gap: 24px;
+      }
+
+      .catalog-scope .coin-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  

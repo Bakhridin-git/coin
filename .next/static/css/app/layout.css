@@ -1,0 +1,1201 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./app/globals.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}/*
+! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com
+*//*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+input:where([type='button']),
+input:where([type='reset']),
+input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+
+  .container {
+    max-width: 1536px;
+  }
+}
+.flex {
+  display: flex;
+}
+.hidden {
+  display: none;
+}
+.resize {
+  resize: both;
+}
+.border {
+  border-width: 1px;
+}
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+/*
+ * Page-specific prototype styles are auto-generated from preview.html and
+ * preview-coin.html by scripts/scope-css.mjs and imported per-page to avoid
+ * cross-contamination.
+ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f4f0;
+  color: #1a1a1a;
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./app/site-header.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/* Global header + mobile drawer styles.
+ *
+ * Previously these lived inside `.catalog-scope` (catalog.css) and
+ * `.coin-detail-scope` (coin-detail.css), but the header is now mounted in
+ * the root layout, OUTSIDE every page scope. To keep header markup working
+ * across all routes, the rules are extracted here without any scope prefix.
+ *
+ * Rules below mirror the desktop + mobile layouts from catalog.css so no
+ * visual regressions — they are just un-scoped.
+ */
+
+header {
+  background: #fff;
+  border-bottom: 1px solid #e8e6e0;
+  padding: 0;
+}
+
+.header-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 20px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.header-top * {
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: #1a1a2e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a84c;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.logo-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.3px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.search-bar-wrap {
+  position: relative;
+  flex: 0 0 560px;
+  width: 560px;
+  max-width: 100%;
+  align-self: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f5f4f0;
+  border: 1px solid #e0ddd6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  gap: 10px;
+  width: 100%;
+  margin-top: 0;
+}
+
+.search-suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #e0ddd6;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(17, 20, 33, 0.12);
+  z-index: 60;
+  max-height: min(360px, 52vh);
+  overflow-y: auto;
+}
+
+.search-suggest-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #1a1a2e;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.search-suggest-item:hover,
+.search-suggest-item.is-active {
+  background: #faf9f7;
+}
+
+.search-suggest-item:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: -2px;
+}
+
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  width: 100%;
+  font-family: inherit;
+}
+
+.search-bar input::-moz-placeholder {
+  color: #aaa;
+}
+
+.search-bar input::placeholder {
+  color: #aaa;
+}
+
+nav.main-nav {
+  border-top: 1px solid #f0ede6;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.nav-overlay {
+  display: none;
+}
+
+.drawer-header {
+  display: none;
+}
+
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.burger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #1a1a2e;
+  border-radius: 2px;
+}
+
+.header-actions {
+  display: none;
+  align-items: center;
+  margin-left: auto;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  color: #1a1a2e;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  display: block;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-list a:hover {
+  color: #1a1a2e;
+}
+
+.nav-list a.active {
+  color: #1a1a2e;
+  border-bottom-color: #c9a84c;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 16px;
+  }
+
+  .header-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 14px 52px;
+    max-width: none;
+    margin: 0;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+
+  .logo {
+    min-width: 0;
+  }
+
+  .logo-title {
+    font-size: 16px;
+  }
+
+  .logo-sub {
+    display: none;
+  }
+
+  .search-bar-wrap {
+    display: none;
+  }
+
+  /* Раскрытое мобильное поле поиска — отдельная строка под шапкой.
+   * Абсолютное позиционирование, чтобы не ломать flex `.header-top`:
+   * лого остаётся по центру, бургер и лупа — на своих местах. */
+  header.search-open .search-bar-wrap {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    flex: none;
+    margin: 0;
+    max-width: none;
+    z-index: 45;
+    box-shadow: 0 8px 20px rgba(17, 20, 33, 0.06);
+  }
+
+  header.search-open .search-bar {
+    display: flex;
+    padding: 10px 16px;
+    border: none;
+    border-top: 1px solid #e8e6e0;
+    border-radius: 0;
+    background: #fff;
+  }
+
+  header.search-open .search-suggest {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+    box-shadow: 0 16px 28px rgba(17, 20, 33, 0.1);
+  }
+
+  .burger-btn {
+    display: flex;
+  }
+
+  .header-actions {
+    display: flex;
+  }
+
+  .burger-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .header-actions {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 20, 34, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 40;
+  }
+
+  .nav-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav.main-nav {
+    display: block;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    width: min(320px, 86vw);
+    height: calc(100vh - 73px);
+    background: #fff;
+    border-top: none;
+    border-right: 1px solid #e8e6e0;
+    box-shadow: 12px 0 40px rgba(17, 20, 33, 0.14);
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 50;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  nav.main-nav.open {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 16px 14px;
+    border-bottom: 1px solid #f0ede6;
+  }
+
+  .drawer-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .drawer-close {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e8e6e0;
+    border-radius: 10px;
+    background: #fff;
+    color: #1a1a2e;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .nav-list {
+    flex-direction: column;
+  }
+
+  .nav-list a {
+    position: relative;
+    padding: 18px 48px 18px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #36394b;
+    border-bottom: 1px solid #f5f4f0;
+  }
+
+  .nav-list a::after {
+    content: '›';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c7c3bb;
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .nav-list a.active {
+    border-bottom-color: #f5f4f0;
+    border-left: 3px solid #c9a84c;
+    background: #faf9f7;
+    color: #1a1a2e;
+    font-weight: 700;
+  }
+}
+
+/* Страховка: шапка всегда строка (Tailwind/base не должен складывать в колонку). */
+header .header-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./components/CategoryTree.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+/* Category tree — used both in the desktop left sidebar and the mobile drawer.
+ * Styles are unscoped on purpose so the component works inside either scope
+ * (.catalog-scope, .coin-detail-scope, or none). Class names are uniquely
+ * prefixed with `cat-tree-` to avoid collisions.
+ */
+
+.cat-tree {
+  background: transparent;
+}
+
+.cat-tree-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  padding: 0 6px 10px;
+}
+
+.cat-tree-list,
+.cat-tree-sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cat-tree-sub {
+  margin: 2px 0 2px 16px;
+  border-left: 1px solid #e8e6e0;
+  padding-left: 8px;
+}
+
+.cat-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 3px 2px;
+  border-radius: 8px;
+  min-height: 32px;
+}
+
+.cat-tree-row:hover {
+  background: #faf9f7;
+}
+
+.cat-tree-row.is-active {
+  background: #f1f0ea;
+}
+
+.cat-tree-row.is-active .cat-tree-label {
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+/* Колонка под иконку — фиксированная ширина, иконка по центру ячейки,
+ * без «лишнего» пустого поля между линией и текстом. */
+.cat-tree-toggle,
+.cat-tree-spacer {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  line-height: 0;
+}
+
+.cat-tree-toggle svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.cat-tree-toggle {
+  cursor: pointer;
+  color: #888;
+  border-radius: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.cat-tree-toggle:hover {
+  color: #1a1a2e;
+}
+
+.cat-tree-toggle.is-open {
+  transform: rotate(90deg);
+}
+
+.cat-tree-link {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  /* Минимальный зазор после шеврона; справа — запас под счётчик
+   * (колонка 20px + визуальный баланс). */
+  padding: 6px 10px 6px 4px;
+  padding-right: 34px;
+  color: #1a1a2e;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.35;
+  min-width: 0;
+  border-radius: 6px;
+}
+
+.cat-tree-link:hover {
+  color: #c9a84c;
+}
+
+.cat-tree-label {
+  flex: 1;
+  min-width: 0;
+  /* Long labels like "Монеты Российской Федерации" must stay fully readable,
+   * so we wrap instead of truncating with an ellipsis. */
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.cat-tree-count {
+  color: #aaa;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  line-height: 1.2;
+  padding-top: 1px;
+}
+
+/* Desktop sidebar wrapper — the only element in its column, so it can simply
+ * stick to the top with a little padding. Visible only on desktop; hidden on
+ * mobile where the tree lives inside the drawer.
+ */
+.cat-sidebar {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .cat-sidebar {
+    display: block;
+    width: 280px;
+    flex-shrink: 0;
+    /* Нулевой внешний отступ — верхний край «карточки» должен начинаться
+     * вровень с верхом filter-bar справа, иначе меню визуально проседает. */
+    padding: 0;
+  }
+
+  .cat-sidebar .cat-tree {
+    position: sticky;
+    top: 16px;
+    background: #fff;
+    border: 1px solid #e8e6e0;
+    border-radius: 12px;
+    /* Одинаковый внутренний отступ со всех сторон карточки. */
+    padding: 12px;
+  }
+}
+
+/* Mobile drawer wrapper — appears only on the small viewport. */
+.cat-drawer-tree {
+  display: none;
+  /* Совпадает с горизонтальными отступами drawer — контент не «плывёт». */
+  padding: 12px;
+}
+
+@media (max-width: 768px) {
+  .cat-drawer-tree {
+    display: block;
+  }
+}
+

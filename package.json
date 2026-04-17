@@ -1,0 +1,32 @@
+{
+  "name": "coin",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "NEXT_DISABLE_DEVTOOLS=1 next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "styles:catalog": "node scripts/scope-css.mjs preview.html catalog-scope app/catalog.css",
+    "styles:coin": "node scripts/scope-css.mjs preview-coin.html coin-detail-scope app/coin-detail.css",
+    "styles": "npm run styles:catalog && npm run styles:coin"
+  },
+  "dependencies": {
+    "next": "^15.4.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "^15.4.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,174 @@
+/* Category tree — used both in the desktop left sidebar and the mobile drawer.
+ * Styles are unscoped on purpose so the component works inside either scope
+ * (.catalog-scope, .coin-detail-scope, or none). Class names are uniquely
+ * prefixed with `cat-tree-` to avoid collisions.
+ */
+
+.cat-tree {
+  background: transparent;
+}
+
+.cat-tree-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  padding: 0 6px 10px;
+}
+
+.cat-tree-list,
+.cat-tree-sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cat-tree-sub {
+  margin: 2px 0 2px 16px;
+  border-left: 1px solid #e8e6e0;
+  padding-left: 8px;
+}
+
+.cat-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 3px 2px;
+  border-radius: 8px;
+  min-height: 32px;
+}
+
+.cat-tree-row:hover {
+  background: #faf9f7;
+}
+
+.cat-tree-row.is-active {
+  background: #f1f0ea;
+}
+
+.cat-tree-row.is-active .cat-tree-label {
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+/* Колонка под иконку — фиксированная ширина, иконка по центру ячейки,
+ * без «лишнего» пустого поля между линией и текстом. */
+.cat-tree-toggle,
+.cat-tree-spacer {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  line-height: 0;
+}
+
+.cat-tree-toggle svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.cat-tree-toggle {
+  cursor: pointer;
+  color: #888;
+  border-radius: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.cat-tree-toggle:hover {
+  color: #1a1a2e;
+}
+
+.cat-tree-toggle.is-open {
+  transform: rotate(90deg);
+}
+
+.cat-tree-link {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  /* Минимальный зазор после шеврона; справа — запас под счётчик
+   * (колонка 20px + визуальный баланс). */
+  padding: 6px 10px 6px 4px;
+  padding-right: 34px;
+  color: #1a1a2e;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.35;
+  min-width: 0;
+  border-radius: 6px;
+}
+
+.cat-tree-link:hover {
+  color: #c9a84c;
+}
+
+.cat-tree-label {
+  flex: 1;
+  min-width: 0;
+  /* Long labels like "Монеты Российской Федерации" must stay fully readable,
+   * so we wrap instead of truncating with an ellipsis. */
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.cat-tree-count {
+  color: #aaa;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  line-height: 1.2;
+  padding-top: 1px;
+}
+
+/* Desktop sidebar wrapper — the only element in its column, so it can simply
+ * stick to the top with a little padding. Visible only on desktop; hidden on
+ * mobile where the tree lives inside the drawer.
+ */
+.cat-sidebar {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .cat-sidebar {
+    display: block;
+    width: 280px;
+    flex-shrink: 0;
+    /* Нулевой внешний отступ — верхний край «карточки» должен начинаться
+     * вровень с верхом filter-bar справа, иначе меню визуально проседает. */
+    padding: 0;
+  }
+
+  .cat-sidebar .cat-tree {
+    position: sticky;
+    top: 16px;
+    background: #fff;
+    border: 1px solid #e8e6e0;
+    border-radius: 12px;
+    /* Одинаковый внутренний отступ со всех сторон карточки. */
+    padding: 12px;
+  }
+}
+
+/* Mobile drawer wrapper — appears only on the small viewport. */
+.cat-drawer-tree {
+  display: none;
+  /* Совпадает с горизонтальными отступами drawer — контент не «плывёт». */
+  padding: 12px;
+}
+
+@media (max-width: 768px) {
+  .cat-drawer-tree {
+    display: block;
+  }
+}
