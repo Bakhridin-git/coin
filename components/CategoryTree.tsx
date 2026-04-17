@@ -43,6 +43,21 @@ function isUrlWithinNode(
   return true;
 }
 
+/** Есть ли у потомка (на любой глубине) href, совпадающий с текущим URL. */
+function isAnyDescendantUrlMatch(
+  children: CategoryNode[],
+  pathname: string,
+  search: URLSearchParams
+): boolean {
+  for (const child of children) {
+    if (isUrlWithinNode(child.href, pathname, search)) return true;
+    if (child.children?.length && isAnyDescendantUrlMatch(child.children, pathname, search)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 interface CategoryTreeProps {
   tree: CategoryNode[];
   /** Total across all eras, for the "Все монеты" row. */
@@ -118,7 +133,13 @@ interface NodeViewProps {
   onNavigate?: () => void;
 }
 
-function CategoryNodeView({ node, depth, activeHref, activePeriodSlug, onNavigate }: NodeViewProps) {
+function CategoryNodeView({
+  node,
+  depth,
+  activeHref,
+  activePeriodSlug,
+  onNavigate
+}: NodeViewProps) {
   const hasChildren = !!node.children && node.children.length > 0;
   const isActiveRoot = depth === 0 && node.id === activePeriodSlug;
 
@@ -129,7 +150,7 @@ function CategoryNodeView({ node, depth, activeHref, activePeriodSlug, onNavigat
     const search = searchParams ?? new URLSearchParams();
     if (isUrlWithinNode(node.href, pathname, search)) return true;
     if (hasChildren) {
-      return (node.children ?? []).some((c) => isUrlWithinNode(c.href, pathname, search));
+      return isAnyDescendantUrlMatch(node.children ?? [], pathname, search);
     }
     return false;
   }, [node, hasChildren, pathname, searchParams]);
@@ -165,11 +186,13 @@ function CategoryNodeView({ node, depth, activeHref, activePeriodSlug, onNavigat
           href={node.href}
           scroll={false}
           onClick={(e) => {
-            if (hasChildren && isActive) {
+            if (!hasChildren) {
+              onNavigate?.();
+              return;
+            }
+            if (isActive) {
               e.preventDefault();
               setOpen((v) => !v);
-            } else if (!hasChildren) {
-              onNavigate?.();
             }
           }}
         >

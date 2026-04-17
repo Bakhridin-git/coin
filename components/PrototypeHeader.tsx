@@ -345,6 +345,9 @@ function PrototypeHeaderInner({ categoryTree, categoryTotal }: PrototypeHeaderPr
         {categoryTree && categoryTree.length > 0 && categoryTotal != null ? (
           <div className="cat-drawer-tree">
             <CategoryTree
+              key={pathname}
+              /* Новый pathname — новое дерево: не тащим раскрытие с прошлой страницы.
+               * После монтирования ветки снова раскрываются по текущему URL (где вы сейчас). */
               tree={categoryTree}
               total={categoryTotal}
               activePeriodSlug={treeActiveSlug}
