@@ -75,7 +75,7 @@ export function CoinCard({ coin, imagePriority = false }: CoinCardProps) {
           ↻ перевернуть
         </button>
       </div>
-      <Link href={href} className="coin-info" scroll={false}>
+      <Link href={href} className="coin-info" scroll={false} title={title}>
         {series && <div className="coin-series">{series.label}</div>}
         <div className="coin-name">{title}</div>
       </Link>

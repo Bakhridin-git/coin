@@ -676,6 +676,7 @@
       border: 1px solid #e8e6e0;
       transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
+      min-width: 0;
     }
 
     .catalog-scope .coin-card:hover {
@@ -800,6 +801,7 @@
       align-items: flex-start;
       text-decoration: none;
       color: inherit;
+      min-width: 0;
     }
 
     .catalog-scope .coin-series {
@@ -820,6 +822,12 @@
       letter-spacing: -0.2px;
       line-height: 1.35;
       width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
 
     .catalog-scope .coin-meta {
