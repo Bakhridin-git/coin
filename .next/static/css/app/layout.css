@@ -544,6 +544,9 @@ video {
 .resize {
   resize: both;
 }
+.break-all {
+  word-break: break-all;
+}
 .border {
   border-width: 1px;
 }
@@ -780,7 +783,7 @@ nav.main-nav {
   color: #1a1a2e;
   cursor: pointer;
   font-family: inherit;
-  font-size: 32px;
+  font-size: 16px;
   line-height: 1;
 }
 
@@ -1051,9 +1054,8 @@ header .header-top {
 }
 
 .cat-tree-sub {
-  margin: 2px 0 2px 16px;
-  border-left: 1px solid #e8e6e0;
-  padding-left: 8px;
+  margin: 2px 0 2px 12px;
+  padding-left: 2px;
 }
 
 .cat-tree-row {
@@ -1070,12 +1072,29 @@ header .header-top {
 }
 
 .cat-tree-row.is-active {
-  background: #f1f0ea;
+  background: #c9a84c;
+  border-radius: 8px;
+}
+
+.cat-tree-row.is-active:hover {
+  background: #b89340;
 }
 
 .cat-tree-row.is-active .cat-tree-label {
   color: #1a1a2e;
   font-weight: 700;
+}
+
+.cat-tree-row.is-active .cat-tree-count {
+  color: rgba(26, 26, 46, 0.55);
+}
+
+.cat-tree-row.is-active .cat-tree-link {
+  color: #1a1a2e;
+}
+
+.cat-tree-row.is-active .cat-tree-link:hover {
+  color: #1a1a2e;
 }
 
 /* Колонка под иконку — фиксированная ширина, иконка по центру ячейки,
@@ -1095,24 +1114,10 @@ header .header-top {
   line-height: 0;
 }
 
-.cat-tree-toggle svg {
-  display: block;
-  flex-shrink: 0;
-}
-
 .cat-tree-toggle {
   cursor: pointer;
-  color: #888;
+  color: transparent;
   border-radius: 4px;
-  transition: transform 0.15s ease, color 0.15s ease;
-}
-
-.cat-tree-toggle:hover {
-  color: #1a1a2e;
-}
-
-.cat-tree-toggle.is-open {
-  transform: rotate(90deg);
 }
 
 .cat-tree-link {
@@ -1123,8 +1128,7 @@ header .header-top {
   gap: 10px;
   /* Минимальный зазор после шеврона; справа — запас под счётчик
    * (колонка 20px + визуальный баланс). */
-  padding: 6px 10px 6px 4px;
-  padding-right: 34px;
+  padding: 6px 6px 6px 4px;
   color: #1a1a2e;
   text-decoration: none;
   font-size: 14px;
@@ -1168,10 +1172,8 @@ header .header-top {
 @media (min-width: 769px) {
   .cat-sidebar {
     display: block;
-    width: 280px;
+    width: var(--catalog-sidebar-width, 280px);
     flex-shrink: 0;
-    /* Нулевой внешний отступ — верхний край «карточки» должен начинаться
-     * вровень с верхом filter-bar справа, иначе меню визуально проседает. */
     padding: 0;
   }
 
@@ -1181,8 +1183,7 @@ header .header-top {
     background: #fff;
     border: 1px solid #e8e6e0;
     border-radius: 12px;
-    /* Одинаковый внутренний отступ со всех сторон карточки. */
-    padding: 12px;
+    padding: 8px;
   }
 }
 

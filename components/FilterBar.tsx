@@ -62,120 +62,124 @@ export function FilterBar({
 
   return (
     <div className="filter-bar" role="toolbar" aria-label="Фильтры каталога">
-      <FilterDropdown
-        label={SORT_LABELS[filters.sort]}
-        buttonClassName="filter-dd-btn--sort"
-        buttonIcon={
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path
-              d="M3 2v8M3 2l-2 2M3 2l2 2M9 10V2M9 10l-2-2M9 10l2-2"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        }
-      >
-        {(close) => (
-          <>
-            {SORT_IDS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                className={`filter-dd-item filter-dd-item--plain ${id === filters.sort ? 'is-active' : ''}`}
-                onClick={() => {
-                  onSetSort(id);
-                  close();
-                }}
-              >
-                <span className="filter-dd-label">{SORT_LABELS[id]}</span>
-              </button>
+      <div className="filter-bar__group">
+        <div className="filter-bar__lead">
+          <FilterDropdown
+            label={SORT_LABELS[filters.sort]}
+            buttonClassName="filter-dd-btn--sort"
+            buttonIcon={
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path
+                  d="M3 2v8M3 2l-2 2M3 2l2 2M9 10V2M9 10l-2-2M9 10l2-2"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            }
+          >
+            {(close) => (
+              <>
+                {SORT_IDS.map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    className={`filter-dd-item filter-dd-item--plain ${id === filters.sort ? 'is-active' : ''}`}
+                    onClick={() => {
+                      onSetSort(id);
+                      close();
+                    }}
+                  >
+                    <span className="filter-dd-label">{SORT_LABELS[id]}</span>
+                  </button>
+                ))}
+              </>
+            )}
+          </FilterDropdown>
+
+          <FilterDropdown label="Тип" activeCount={filters.types.length}>
+            {COIN_TYPE_OPTIONS.map((opt) => (
+              <label key={opt.id} className="filter-dd-item">
+                <input
+                  type="checkbox"
+                  checked={filters.types.includes(opt.id)}
+                  onChange={() => onToggleType(opt.id)}
+                />
+                <span className="filter-dd-label">{opt.label}</span>
+                <span className="filter-dd-count">{counts.type[opt.id] ?? 0}</span>
+              </label>
             ))}
-          </>
-        )}
-      </FilterDropdown>
+          </FilterDropdown>
+        </div>
 
-      <FilterDropdown label="Тип" activeCount={filters.types.length}>
-        {COIN_TYPE_OPTIONS.map((opt) => (
-          <label key={opt.id} className="filter-dd-item">
-            <input
-              type="checkbox"
-              checked={filters.types.includes(opt.id)}
-              onChange={() => onToggleType(opt.id)}
-            />
-            <span className="filter-dd-label">{opt.label}</span>
-            <span className="filter-dd-count">{counts.type[opt.id] ?? 0}</span>
-          </label>
-        ))}
-      </FilterDropdown>
-
-      <FilterDropdown label="Материал" activeCount={filters.materials.length}>
-        {COIN_MATERIAL_OPTIONS.map((opt) => (
-          <label key={opt.id} className="filter-dd-item">
-            <input
-              type="checkbox"
-              checked={filters.materials.includes(opt.id)}
-              onChange={() => onToggleMaterial(opt.id)}
-            />
-            <span className="filter-dd-label">{opt.label}</span>
-            <span className="filter-dd-count">{counts.material[opt.id] ?? 0}</span>
-          </label>
-        ))}
-      </FilterDropdown>
-
-      <FilterDropdown label="Номинал" activeCount={filters.denominations.length}>
-        {denominations.map((d) => {
-          const key = denomKeyToString(d);
-          const checked = filters.denominations.some((x) => denomKeyToString(x) === key);
-          return (
-            <label key={key} className="filter-dd-item">
+        <FilterDropdown label="Материал" activeCount={filters.materials.length}>
+          {COIN_MATERIAL_OPTIONS.map((opt) => (
+            <label key={opt.id} className="filter-dd-item">
               <input
                 type="checkbox"
-                checked={checked}
-                onChange={() => onToggleDenomination(d)}
+                checked={filters.materials.includes(opt.id)}
+                onChange={() => onToggleMaterial(opt.id)}
               />
-              <span className="filter-dd-label">{formatDenomination(d.value, d.unit)}</span>
-              <span className="filter-dd-count">{counts.denomination[key] ?? 0}</span>
+              <span className="filter-dd-label">{opt.label}</span>
+              <span className="filter-dd-count">{counts.material[opt.id] ?? 0}</span>
             </label>
-          );
-        })}
-      </FilterDropdown>
-
-      {hasYears && (
-        <FilterDropdown
-          label="Год"
-          activeCount={filters.yearFrom != null || filters.yearTo != null ? 1 : 0}
-          panelClassName="filter-dd-panel--wide"
-        >
-          {(close) => (
-            <YearRangeFilter
-              min={minYear}
-              max={maxYear}
-              valueFrom={filters.yearFrom}
-              valueTo={filters.yearTo}
-              onApply={(from, to) => {
-                onSetYearRange(from, to);
-                close();
-              }}
-            />
-          )}
+          ))}
         </FilterDropdown>
-      )}
 
-      <FilterDropdown label="Монетный двор" activeCount={filters.mints.length}>
-        {MINT_OPTIONS.map((opt) => (
-          <label key={opt.id} className="filter-dd-item">
-            <input
-              type="checkbox"
-              checked={filters.mints.includes(opt.id)}
-              onChange={() => onToggleMint(opt.id)}
-            />
-            <span className="filter-dd-label">{opt.label}</span>
-            <span className="filter-dd-count">{counts.mint[opt.id] ?? 0}</span>
-          </label>
-        ))}
-      </FilterDropdown>
+        <FilterDropdown label="Номинал" activeCount={filters.denominations.length}>
+          {denominations.map((d) => {
+            const key = denomKeyToString(d);
+            const checked = filters.denominations.some((x) => denomKeyToString(x) === key);
+            return (
+              <label key={key} className="filter-dd-item">
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => onToggleDenomination(d)}
+                />
+                <span className="filter-dd-label">{formatDenomination(d.value, d.unit)}</span>
+                <span className="filter-dd-count">{counts.denomination[key] ?? 0}</span>
+              </label>
+            );
+          })}
+        </FilterDropdown>
+
+        {hasYears && (
+          <FilterDropdown
+            label="Год"
+            activeCount={filters.yearFrom != null || filters.yearTo != null ? 1 : 0}
+            panelClassName="filter-dd-panel--wide"
+          >
+            {(close) => (
+              <YearRangeFilter
+                min={minYear}
+                max={maxYear}
+                valueFrom={filters.yearFrom}
+                valueTo={filters.yearTo}
+                onApply={(from, to) => {
+                  onSetYearRange(from, to);
+                  close();
+                }}
+              />
+            )}
+          </FilterDropdown>
+        )}
+
+        <FilterDropdown label="Монетный двор" activeCount={filters.mints.length}>
+          {MINT_OPTIONS.map((opt) => (
+            <label key={opt.id} className="filter-dd-item">
+              <input
+                type="checkbox"
+                checked={filters.mints.includes(opt.id)}
+                onChange={() => onToggleMint(opt.id)}
+              />
+              <span className="filter-dd-label">{opt.label}</span>
+              <span className="filter-dd-count">{counts.mint[opt.id] ?? 0}</span>
+            </label>
+          ))}
+        </FilterDropdown>
+      </div>
 
       {hasAny && (
         <button type="button" className="filter-bar-reset" onClick={onReset}>

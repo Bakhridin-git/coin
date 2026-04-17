@@ -1,6 +1,6 @@
 import type { Coin, CoinType } from './types';
+import { PARAM } from './constants';
 import { PERIODS, type Period } from './periods';
-import { PARAM } from './catalog';
 import { ALL_SERIES, getCanonicalSeries } from './series';
 
 /**

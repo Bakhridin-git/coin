@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { PARAM } from '../lib/catalog';
-import { SEARCH_API_PATH } from '../lib/constants';
+import { PARAM, SEARCH_API_PATH } from '../lib/constants';
 import { buildNavItems } from '../lib/nav';
 import type { CategoryNode } from '../lib/categoryTree';
 import { CategoryTree } from './CategoryTree';
@@ -95,6 +94,7 @@ function PrototypeHeaderInner({ categoryTree, categoryTotal }: PrototypeHeaderPr
   const [query, setQuery] = useState(urlQuery);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchWrapRef = useRef<HTMLDivElement | null>(null);
+  const searchToggleBtnRef = useRef<HTMLButtonElement | null>(null);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [highlight, setHighlight] = useState(-1);
 
@@ -220,14 +220,27 @@ function PrototypeHeaderInner({ categoryTree, categoryTotal }: PrototypeHeaderPr
     });
   }, []);
 
-  // Esc закрывает раскрытое поле поиска — привычно для пользователя.
+  // Esc и клик вне поисковой строки закрывают поиск.
   useEffect(() => {
     if (!searchOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSearchOpen(false);
     };
+    const onPointer = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (
+        !searchWrapRef.current?.contains(target) &&
+        !searchToggleBtnRef.current?.contains(target)
+      ) {
+        setSearchOpen(false);
+      }
+    };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer, { capture: true });
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer, { capture: true });
+    };
   }, [searchOpen]);
 
   const headerClass = searchOpen ? 'search-open' : undefined;
@@ -296,13 +309,24 @@ function PrototypeHeaderInner({ categoryTree, categoryTotal }: PrototypeHeaderPr
 
         <div className="header-actions">
           <button
+            ref={searchToggleBtnRef}
             type="button"
             className="icon-btn"
             aria-label={searchOpen ? 'Закрыть поиск' : 'Поиск'}
             aria-expanded={searchOpen}
             onClick={toggleSearch}
           >
-            {searchOpen ? '×' : '⌕'}
+            {searchOpen ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <line x1="2" y1="2" x2="14" y2="14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="14" y1="2" x2="2" y2="14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" strokeWidth="1.8"/>
+                <line x1="11.5" y1="11.5" x2="16" y2="16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            )}
           </button>
         </div>
       </div>

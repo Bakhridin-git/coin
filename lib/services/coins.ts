@@ -2,6 +2,13 @@ import { access, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Coin, DenominationUnit } from '../types';
 
+function isEnoent(e: unknown): e is NodeJS.ErrnoException {
+  return e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'ENOENT';
+}
+
+/** Кэш при отсутствии CSV — отличается от любого реального mtime. */
+const MTIME_MISSING_CSV = -1;
+
 async function pickPublicImage(slug: string, side: 'obverse' | 'reverse'): Promise<string> {
   const baseFs = path.join(process.cwd(), 'public', 'images', 'coins');
   const basePublic = `/images/coins/${slug}-${side}`;
@@ -91,8 +98,19 @@ let cachedMtimeMs = 0;
 
 export async function getCoins(): Promise<Coin[]> {
   const csvPath = path.join(process.cwd(), 'data', 'coins.csv');
-  const st = await stat(csvPath);
-  if (cached && st.mtimeMs === cachedMtimeMs) return cached;
+  let st: Awaited<ReturnType<typeof stat>>;
+  try {
+    st = await stat(csvPath);
+  } catch (e) {
+    if (!isEnoent(e)) throw e;
+    if (cached !== null && cachedMtimeMs === MTIME_MISSING_CSV) return cached;
+    console.warn(`[getCoins] Файл не найден: ${csvPath} — каталог пуст.`);
+    cached = [];
+    cachedMtimeMs = MTIME_MISSING_CSV;
+    return cached;
+  }
+
+  if (cached !== null && st.mtimeMs === cachedMtimeMs) return cached;
 
   const raw = await readFile(csvPath, 'utf8');
   const lines = raw.split(/\r?\n/).filter(Boolean);

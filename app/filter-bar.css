@@ -23,8 +23,8 @@
   line-height: 1.4;
 }
 
-/* Pull the two-column area flush against the head — the visual stack becomes
- * [breadcrumb + title] then [sidebar | filter bar + grid] aligned at the top. */
+/* Десктоп: [breadcrumb + title], затем строка фильтров на всю ширину .main,
+ * затем [меню | сетка] — см. `.catalog-filter-row` + grid в catalog.css */
 .catalog-scope .main {
   padding-top: 20px;
 }
@@ -52,12 +52,33 @@
 }
 
 @media (min-width: 769px) {
+  /* Ряд на всю ширину .main: левый край = у меню; [группа кнопок] + [Сбросить вправо] */
   .catalog-scope .filter-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 0;
+    box-sizing: border-box;
+  }
+
+  .catalog-scope .filter-bar__group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
-    margin-bottom: 24px;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .catalog-scope .filter-bar__lead {
+    display: contents;
+  }
+
+  .catalog-scope .filter-bar-reset {
+    flex-shrink: 0;
   }
 
   .catalog-scope .sidebar {
@@ -98,7 +119,6 @@
 .catalog-scope .filter-dd-btn.is-active {
   background: #c9a84c;
   border-color: #c9a84c;
-  color: #1a1a2e;
 }
 
 .catalog-scope .filter-dd-chev {
@@ -227,7 +247,6 @@
 .catalog-scope .filter-dd-btn--sort {
   background: #c9a84c;
   border-color: #c9a84c;
-  color: #1a1a2e;
 }
 
 .catalog-scope .filter-dd-btn--sort:hover {
@@ -238,11 +257,11 @@
 .catalog-scope .filter-dd-btn--sort.is-open {
   background: #b89340;
   border-color: #b89340;
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.22);
 }
 
-.catalog-scope .filter-dd-btn--sort .filter-dd-chev {
-  opacity: 0.9;
+.catalog-scope .filter-dd-btn--sort .filter-dd-icon {
+  color: #1a1a2e;
+  opacity: 1;
 }
 
 /* Year range filter
@@ -438,10 +457,10 @@
   border-color: #b89340;
 }
 
-/* Mobile sidebar year fields (same visual language, single column). */
+/* Поля года в мобильном drawer каталога (сетка переопределяется в catalog.css). */
 .catalog-scope .filter-year-range {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -449,6 +468,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
   padding: 10px 12px;
   border: 1px solid #e8e6e0;
   border-radius: 10px;

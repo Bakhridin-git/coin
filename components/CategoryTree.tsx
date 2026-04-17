@@ -7,10 +7,26 @@ import type { CategoryNode } from '../lib/categoryTree';
 import './CategoryTree.css';
 
 /**
- * URL узла считается «активным», если pathname совпадает и все query-параметры
- * из ссылки узла присутствуют в текущем URL. Лишние параметры в текущем URL
- * (например, выбранная серия поверх type=jubilee) не мешают — узел родитель
- * остаётся активным и раскрытым.
+ * Строит «канонический» href активного узла из текущего URL —
+ * только pathname + nav-параметры (type, series, sub).
+ * Все остальные параметры (sort, q, material…) отбрасываются.
+ * Сравнение `node.href === activeHref` гарантирует ровно один активный узел.
+ */
+function buildActiveHref(pathname: string, search: URLSearchParams): string {
+  const parts: string[] = [];
+  const type = search.get('type');
+  const series = search.get('series');
+  const sub = search.get('sub');
+  if (type) parts.push(`type=${type}`);
+  if (series) parts.push(`series=${series}`);
+  if (sub) parts.push(`sub=${sub}`);
+  return parts.length ? `${pathname}?${parts.join('&')}` : pathname;
+}
+
+/**
+ * URL узла считается «на активном пути», если pathname совпадает и все
+ * навигационные параметры из href узла присутствуют в текущем URL.
+ * Используется только для авто-раскрытия узлов — не для подсветки.
  */
 function isUrlWithinNode(
   nodeHref: string,
@@ -23,29 +39,6 @@ function isUrlWithinNode(
   const required = new URLSearchParams(hrefQuery);
   for (const [k, v] of required) {
     if (search.get(k) !== v) return false;
-  }
-  return true;
-}
-
-/**
- * Строгое сравнение: pathname и набор query-параметров совпадают точно.
- * Используется для обработки «повторного клика» — чтобы свернуть раздел,
- * когда пользователь уже стоит ровно на этой странице без дополнительных
- * фильтров.
- */
-function isUrlExactlyNode(
-  nodeHref: string,
-  pathname: string,
-  search: URLSearchParams
-): boolean {
-  const [hrefPath, hrefQuery = ''] = nodeHref.split('?');
-  if (pathname !== hrefPath) return false;
-  const required = new URLSearchParams(hrefQuery);
-  const requiredKeys = Array.from(required.keys());
-  const currentKeys = Array.from(search.keys());
-  if (requiredKeys.length !== currentKeys.length) return false;
-  for (const k of requiredKeys) {
-    if (search.get(k) !== required.get(k)) return false;
   }
   return true;
 }
@@ -66,9 +59,7 @@ interface CategoryTreeProps {
 
 /**
  * Expandable categories tree. Used in the desktop left sidebar and the mobile
- * drawer. Each row has a chevron toggle (if there are children) and a link that
- * navigates to a pre-filtered catalog URL. Toggle and link are siblings so
- * clicks don't collide.
+ * drawer. У узлов с детьми — невидимая кнопка раскрытия + ссылка; клики не пересекаются.
  */
 export function CategoryTree({
   tree,
@@ -78,6 +69,10 @@ export function CategoryTree({
   title,
   className
 }: CategoryTreeProps) {
+  const pathname = usePathname() ?? '';
+  const searchParams = useSearchParams();
+  const activeHref = buildActiveHref(pathname, searchParams ?? new URLSearchParams());
+
   return (
     <div className={['cat-tree', className].filter(Boolean).join(' ')}>
       {title && <div className="cat-tree-heading">{title}</div>}
@@ -86,7 +81,7 @@ export function CategoryTree({
           <div
             className={[
               'cat-tree-row',
-              activePeriodSlug === null ? 'is-active' : ''
+              activeHref === '/' ? 'is-active' : ''
             ]
               .filter(Boolean)
               .join(' ')}
@@ -105,6 +100,7 @@ export function CategoryTree({
             key={node.id}
             node={node}
             depth={0}
+            activeHref={activeHref}
             activePeriodSlug={activePeriodSlug}
             onNavigate={onNavigate}
           />
@@ -117,57 +113,39 @@ export function CategoryTree({
 interface NodeViewProps {
   node: CategoryNode;
   depth: number;
+  activeHref: string;
   activePeriodSlug: string | null;
   onNavigate?: () => void;
 }
 
-function CategoryNodeView({ node, depth, activePeriodSlug, onNavigate }: NodeViewProps) {
+function CategoryNodeView({ node, depth, activeHref, activePeriodSlug, onNavigate }: NodeViewProps) {
   const hasChildren = !!node.children && node.children.length > 0;
   const isActiveRoot = depth === 0 && node.id === activePeriodSlug;
 
   const pathname = usePathname() ?? '';
   const searchParams = useSearchParams();
 
-  // «Узел на активном пути» — текущий URL попадает в него или его потомка.
-  // Используется и для раскрытия по умолчанию, и для синхронизации при смене
-  // маршрута (компонент живёт в root layout, state переживает навигацию).
   const isOnActivePath = useMemo(() => {
     const search = searchParams ?? new URLSearchParams();
     if (isUrlWithinNode(node.href, pathname, search)) return true;
     if (hasChildren) {
-      return node.children!.some((c) => isUrlWithinNode(c.href, pathname, search));
+      return (node.children ?? []).some((c) => isUrlWithinNode(c.href, pathname, search));
     }
     return false;
   }, [node, hasChildren, pathname, searchParams]);
 
   const [open, setOpen] = useState(isOnActivePath || isActiveRoot);
 
-  // Если пользователь ушёл в подраздел этого узла (например, кликнул на
-  // «Юбилейные и памятные»), автоматически раскрываем — не ждём клика по
-  // шеврону. Вручную закрытый узел остаётся закрытым только пока URL с ним
-  // не совпадает; как только маршрут снова попадает внутрь — открываем.
   useEffect(() => {
     if (isOnActivePath) setOpen(true);
   }, [isOnActivePath]);
 
-  // Точное совпадение URL — подсвечиваем строку как активную.
-  const isExactlyActive = useMemo(() => {
-    const search = searchParams ?? new URLSearchParams();
-    return isUrlWithinNode(node.href, pathname, search);
-  }, [node.href, pathname, searchParams]);
-
-  // Нужен отдельный строгий флаг для «повторного клика сворачивает». Если
-  // в URL висят лишние параметры дочернего узла (например, series=...),
-  // родитель не должен считаться «точно на этой странице».
-  const isUrlExact = useMemo(() => {
-    const search = searchParams ?? new URLSearchParams();
-    return isUrlExactlyNode(node.href, pathname, search);
-  }, [node.href, pathname, searchParams]);
+  const isActive = node.href === activeHref;
 
   return (
     <li className={`cat-tree-item depth-${depth}`}>
       <div
-        className={['cat-tree-row', isExactlyActive || isActiveRoot ? 'is-active' : '']
+        className={['cat-tree-row', isActive ? 'is-active' : '']
           .filter(Boolean)
           .join(' ')}
       >
@@ -178,39 +156,19 @@ function CategoryNodeView({ node, depth, activePeriodSlug, onNavigate }: NodeVie
             onClick={() => setOpen((o) => !o)}
             aria-label={open ? 'Свернуть раздел' : 'Развернуть раздел'}
             aria-expanded={open}
-          >
-            <svg width="8" height="10" viewBox="0 0 8 10" fill="none" aria-hidden="true">
-              <path
-                d="M1 1l5 4-5 4"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+          />
         ) : (
           <span className="cat-tree-spacer" aria-hidden="true" />
         )}
         <Link
           className="cat-tree-link"
           href={node.href}
-          // scroll={false} — переходы между разделами каталога не должны
-          // прыгать к началу страницы. Каталог/сайдбар остаются в кадре,
-          // контент обновляется под курсором пользователя.
           scroll={false}
           onClick={(e) => {
-            if (hasChildren) {
-              // Клик по уже активной строке (тот же URL) — тогглим open
-              // локально, без навигации: нет ни прыжка скролла, ни лишнего
-              // server-render. В остальных случаях пусть Link переходит
-              // сам; раскрытие сработает в useEffect, когда isOnActivePath
-              // станет true. Это убирает двойной ре-рендер и «дёрганье».
-              if (isUrlExact) {
-                e.preventDefault();
-                setOpen((v) => !v);
-              }
-            } else {
+            if (hasChildren && isActive) {
+              e.preventDefault();
+              setOpen((v) => !v);
+            } else if (!hasChildren) {
               onNavigate?.();
             }
           }}
@@ -222,11 +180,12 @@ function CategoryNodeView({ node, depth, activePeriodSlug, onNavigate }: NodeVie
 
       {open && hasChildren && (
         <ul className="cat-tree-sub">
-          {node.children!.map((child) => (
+          {(node.children ?? []).map((child) => (
             <CategoryNodeView
               key={child.id}
               node={child}
               depth={depth + 1}
+              activeHref={activeHref}
               activePeriodSlug={activePeriodSlug}
               onNavigate={onNavigate}
             />

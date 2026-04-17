@@ -15,8 +15,13 @@ export type CatalogTreePayload = {
  * в одном RSC-рендере (раньше дерево собиралось дважды).
  */
 export const getCatalogTreeData = cache(async (): Promise<CatalogTreePayload> => {
-  const coins = await getCoins();
-  const tree = buildCategoryTree(coins);
-  const total = totalCoinCount(tree);
-  return { coins, tree, total };
+  try {
+    const coins = await getCoins();
+    const tree = buildCategoryTree(coins);
+    const total = totalCoinCount(tree);
+    return { coins, tree, total };
+  } catch (e) {
+    console.error('[getCatalogTreeData] каталог недоступен, отдаём пустые данные:', e);
+    return { coins: [], tree: [], total: 0 };
+  }
 });

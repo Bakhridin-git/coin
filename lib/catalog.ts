@@ -1,6 +1,9 @@
 import type { Coin, CoinMaterial, CoinType, DenominationUnit } from './types';
+import { PARAM } from './constants';
 import { getCanonicalSeries } from './series';
 import { matchesQuery } from './search-query';
+
+export { PARAM };
 
 /**
  * Ключ номинала для фильтра — пара (значение, единица). Нужен потому что
@@ -133,20 +136,6 @@ export const EMPTY_FILTERS: CatalogFilters = {
   sort: DEFAULT_SORT
 };
 
-/** Query-string keys used in the URL. Kept short because they appear in URLs. */
-export const PARAM = {
-  q: 'q',
-  type: 'type',
-  material: 'material',
-  mint: 'mint',
-  series: 'series',
-  sub: 'sub',
-  denomination: 'denomination',
-  yearFrom: 'yearFrom',
-  yearTo: 'yearTo',
-  sort: 'sort'
-} as const;
-
 function parseIntOrNull(value: string | null): number | null {
   if (!value) return null;
   const n = Number(value);
@@ -233,11 +222,24 @@ export function serializeFilters(filters: CatalogFilters): Record<string, string
   return out;
 }
 
-export function buildSearchString(filters: CatalogFilters): string {
+/**
+ * Собирает query для каталога. `page` в URL только если > 1 (первая страница без параметра).
+ */
+export function buildSearchString(filters: CatalogFilters, page: number = 1): string {
   const entries = Object.entries(serializeFilters(filters));
+  if (page > 1) entries.push([PARAM.page, String(page)]);
   if (entries.length === 0) return '';
   const usp = new URLSearchParams(entries);
   return `?${usp.toString()}`;
+}
+
+/** Номер страницы из query (`page`), минимум 1. */
+export function parsePageParam(params: URLSearchParams): number {
+  const raw = params.get(PARAM.page);
+  if (!raw) return 1;
+  const n = parseInt(raw, 10);
+  if (!Number.isFinite(n) || n < 1) return 1;
+  return n;
 }
 
 export function applyFilters(coins: Coin[], filters: CatalogFilters): Coin[] {
@@ -263,33 +265,34 @@ export function applyFilters(coins: Coin[], filters: CatalogFilters): Coin[] {
   return applySort(filtered, filters.sort);
 }
 
-/**
- * Основная цена для сортировки — MS-63 (самая часто заполненная градация).
- * Для монет без цены нужно вернуть «крайнее» значение так, чтобы они уходили
- * в конец списка при любом направлении сортировки — пустые карточки не
- * должны возглавлять «сначала дешёвые» или «сначала дорогие».
- */
-function priceForSort(coin: Coin, direction: 'asc' | 'desc'): number {
-  const p = coin.prices.ms63;
-  if (p != null) return p;
-  return direction === 'asc' ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
-}
 
 export function applySort(coins: Coin[], sort: SortId): Coin[] {
   const arr = [...coins];
   switch (sort) {
-    case 'yearAsc':
-      return arr.sort((a, b) => a.year - b.year || a.name.localeCompare(b.name, 'ru'));
+    case 'new':
     case 'yearDesc':
       return arr.sort((a, b) => b.year - a.year || a.name.localeCompare(b.name, 'ru'));
-    case 'new':
-      return arr.sort((a, b) => b.year - a.year || a.name.localeCompare(b.name, 'ru'));
     case 'newBottom':
+    case 'yearAsc':
       return arr.sort((a, b) => a.year - b.year || a.name.localeCompare(b.name, 'ru'));
     case 'cheapFirst':
-      return arr.sort((a, b) => priceForSort(a, 'asc') - priceForSort(b, 'asc'));
+      return arr.sort((a, b) => {
+        const pa = a.prices.ms63;
+        const pb = b.prices.ms63;
+        if (pa == null && pb == null) return 0;
+        if (pa == null) return 1;
+        if (pb == null) return -1;
+        return pa - pb;
+      });
     case 'expensiveFirst':
-      return arr.sort((a, b) => priceForSort(b, 'desc') - priceForSort(a, 'desc'));
+      return arr.sort((a, b) => {
+        const pa = a.prices.ms63;
+        const pb = b.prices.ms63;
+        if (pa == null && pb == null) return 0;
+        if (pa == null) return 1;
+        if (pb == null) return -1;
+        return pb - pa;
+      });
     case 'popular':
     default:
       return arr;

@@ -2,7 +2,15 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {
   activeFilterCount,
   applyFilters,
@@ -13,8 +21,8 @@ import {
   denomKeyToString,
   denominationOptions,
   MINT_OPTIONS,
-  PARAM,
   parseFilters,
+  parsePageParam,
   SORT_IDS,
   SORT_LABELS,
   yearOptions,
@@ -24,7 +32,13 @@ import {
 } from '../lib/catalog';
 import type { CategoryNode } from '../lib/categoryTree';
 import type { Coin, CoinMaterial, CoinType } from '../lib/types';
+import {
+  CATALOG_PAGE_LCP_IMAGE_COUNT,
+  CATALOG_PAGE_SIZE,
+  PARAM
+} from '../lib/constants';
 import { formatDenomination } from '../lib/format';
+import { CatalogPagination } from './CatalogPagination';
 import { CoinCard } from './CoinCard';
 import { FilterBar } from './FilterBar';
 import { CategoryTree } from './CategoryTree';
@@ -73,10 +87,88 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
   const visibleCoins = useMemo(() => applyFilters(coins, filters), [coins, filters]);
   const activeCount = activeFilterCount(filters);
 
+  const pageFromUrl = useMemo(
+    () => parsePageParam(new URLSearchParams(searchParams.toString())),
+    [searchParams]
+  );
+
+  const totalPages = useMemo(() => {
+    const n = visibleCoins.length;
+    if (n === 0) return 1;
+    return Math.max(1, Math.ceil(n / CATALOG_PAGE_SIZE));
+  }, [visibleCoins.length]);
+
+  const effectivePage = Math.min(Math.max(1, pageFromUrl), totalPages);
+
+  const pagedCoins = useMemo(() => {
+    const total = visibleCoins.length;
+    if (total === 0) return [] as Coin[];
+    const startIdx = (effectivePage - 1) * CATALOG_PAGE_SIZE;
+    return visibleCoins.slice(startIdx, startIdx + CATALOG_PAGE_SIZE);
+  }, [visibleCoins, effectivePage]);
+
+  useEffect(() => {
+    if (pageFromUrl !== effectivePage) {
+      router.replace(`${scope.basePath}${buildSearchString(filters, effectivePage)}`, {
+        scroll: false
+      });
+    }
+  }, [pageFromUrl, effectivePage, filters, scope.basePath, router]);
+
+  const getPageHref = useCallback(
+    (page: number) => `${scope.basePath}${buildSearchString(filters, page)}`,
+    [filters, scope.basePath]
+  );
+
+  /** Query без `page` — смена только страницы не даёт вспышку. */
+  const filtersOnlyKey = useMemo(() => {
+    const usp = new URLSearchParams(searchParams.toString());
+    usp.delete(PARAM.page);
+    return usp.toString();
+  }, [searchParams]);
+
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
+
+  const skipResultsFlashOnMount = useRef(true);
+  const pendingFlashRef = useRef(false);
+  const resultsFlashTargetRef = useRef<HTMLDivElement | null>(null);
+
+  const triggerFlash = useCallback(() => {
+    const el = resultsFlashTargetRef.current;
+    if (!el) return;
+    el.classList.remove('catalog-results-flash');
+    void el.offsetWidth;
+    el.classList.add('catalog-results-flash');
+  }, []);
+
+  // Desktop: анимируем сразу при смене фильтров (drawer закрыт).
+  // Mobile с открытым drawer: запоминаем pending, анимируем при закрытии.
+  useEffect(() => {
+    if (skipResultsFlashOnMount.current) {
+      skipResultsFlashOnMount.current = false;
+      return;
+    }
+    if (filtersOpen) {
+      pendingFlashRef.current = true;
+    } else {
+      triggerFlash();
+    }
+  }, [filtersOnlyKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useLayoutEffect — срабатывает ДО рисования, в тот же кадр что закрывается
+  // drawer. Нет промежуточного кадра без анимации → нет дёргания.
+  useLayoutEffect(() => {
+    if (!filtersOpen && pendingFlashRef.current) {
+      pendingFlashRef.current = false;
+      triggerFlash();
+    }
+  }, [filtersOpen, triggerFlash]);
+
   const updateFilters = useCallback(
     (patch: Partial<CatalogFilters>) => {
       const next: CatalogFilters = { ...filters, ...patch };
-      router.replace(`${scope.basePath}${buildSearchString(next)}`, { scroll: false });
+      router.replace(`${scope.basePath}${buildSearchString(next, 1)}`, { scroll: false });
     },
     [filters, router, scope.basePath]
   );
@@ -90,9 +182,6 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
       list.includes(value) ? list.filter((v) => v !== value) : [...list, value],
     []
   );
-
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [sortOpen, setSortOpen] = useState(false);
 
   useEffect(() => {
     if (filtersOpen || sortOpen) {
@@ -200,6 +289,22 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
       </div>
 
       <div className="main">
+        <div className="catalog-filter-row">
+          <FilterBar
+            filters={filters}
+            counts={counts}
+            denominations={denominations}
+            years={years}
+            onToggleType={toggleType}
+            onToggleMaterial={toggleMaterial}
+            onToggleMint={toggleMint}
+            onToggleDenomination={toggleDenomination}
+            onSetYearRange={(from, to) => updateFilters({ yearFrom: from, yearTo: to })}
+            onSetSort={(sort) => updateFilters({ sort })}
+            onReset={resetFilters}
+          />
+        </div>
+
         <aside className="cat-sidebar" aria-label="Разделы каталога">
           <CategoryTree
             tree={categoryTree}
@@ -342,20 +447,6 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
         </aside>
 
         <main className="content">
-          <FilterBar
-            filters={filters}
-            counts={counts}
-            denominations={denominations}
-            years={years}
-            onToggleType={toggleType}
-            onToggleMaterial={toggleMaterial}
-            onToggleMint={toggleMint}
-            onToggleDenomination={toggleDenomination}
-            onSetYearRange={(from, to) => updateFilters({ yearFrom: from, yearTo: to })}
-            onSetSort={(sort) => updateFilters({ sort })}
-            onReset={resetFilters}
-          />
-
           <div className="mobile-actions">
             <button className="mobile-button mobile-button--sort" type="button" onClick={openSort}>
               <span aria-hidden="true">⇅</span>
@@ -377,29 +468,47 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
             </button>
           </div>
 
-          {visibleCoins.length === 0 ? (
-            <EmptyState
-              query={filters.q}
-              hasOtherFilters={activeCount > 0}
-              onReset={() => {
-                router.replace('/', { scroll: false });
-              }}
-              onSearchGlobal={() => {
-                // «Найти по всему каталогу» — снимаем все фильтры, кроме
-                // самого запроса, и уходим на корень. Так пользователь
-                // видит полный результат независимо от активного периода/типа.
-                const q = filters.q.trim();
-                const tail = q ? `?${PARAM.q}=${encodeURIComponent(q)}` : '';
-                router.replace(`/${tail}`, { scroll: false });
-              }}
-            />
-          ) : (
-            <div className="coin-grid">
-              {visibleCoins.map((coin) => (
-                <CoinCard key={coin.slug} coin={coin} />
-              ))}
-            </div>
-          )}
+          <div
+            ref={resultsFlashTargetRef}
+            className="catalog-results-flash-wrap"
+          >
+            {visibleCoins.length === 0 ? (
+              <EmptyState
+                query={filters.q}
+                hasOtherFilters={activeCount > 0}
+                onReset={() => {
+                  router.replace('/', { scroll: false });
+                }}
+                onSearchGlobal={() => {
+                  // «Найти по всему каталогу» — снимаем все фильтры, кроме
+                  // самого запроса, и уходим на корень. Так пользователь
+                  // видит полный результат независимо от активного периода/типа.
+                  const q = filters.q.trim();
+                  const tail = q ? `?${PARAM.q}=${encodeURIComponent(q)}` : '';
+                  router.replace(`/${tail}`, { scroll: false });
+                }}
+              />
+            ) : (
+              <>
+                <div className="coin-grid">
+                  {pagedCoins.map((coin, index) => (
+                    <CoinCard
+                      key={coin.slug}
+                      coin={coin}
+                      imagePriority={
+                        effectivePage === 1 && index < CATALOG_PAGE_LCP_IMAGE_COUNT
+                      }
+                    />
+                  ))}
+                </div>
+                <CatalogPagination
+                  currentPage={effectivePage}
+                  totalPages={totalPages}
+                  getPageHref={getPageHref}
+                />
+              </>
+            )}
+          </div>
         </main>
       </div>
     </>
