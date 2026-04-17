@@ -46,7 +46,6 @@ export function CatalogPagination({
           <Link
             className="catalog-pagination__link catalog-pagination__link--step"
             href={getPageHref(currentPage - 1)}
-            scroll={false}
           >
             <span className="catalog-pagination__link-full">Назад</span>
             <span className="catalog-pagination__link-compact" aria-hidden="true">
@@ -72,7 +71,6 @@ export function CatalogPagination({
                 <Link
                   className="catalog-pagination__num"
                   href={getPageHref(1)}
-                  scroll={false}
                 >
                   1
                 </Link>
@@ -87,7 +85,6 @@ export function CatalogPagination({
               <Link
                 key={p}
                 href={getPageHref(p)}
-                scroll={false}
                 className={
                   p === currentPage
                     ? 'catalog-pagination__num catalog-pagination__num--current'
@@ -108,7 +105,6 @@ export function CatalogPagination({
                 <Link
                   className="catalog-pagination__num"
                   href={getPageHref(totalPages)}
-                  scroll={false}
                 >
                   {totalPages}
                 </Link>
@@ -121,7 +117,6 @@ export function CatalogPagination({
           <Link
             className="catalog-pagination__link catalog-pagination__link--step"
             href={getPageHref(currentPage + 1)}
-            scroll={false}
           >
             <span className="catalog-pagination__link-full">Вперёд</span>
             <span className="catalog-pagination__link-compact" aria-hidden="true">
