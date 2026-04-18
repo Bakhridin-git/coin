@@ -7,6 +7,9 @@
 //   node scripts/cbr-import.mjs --from 1992 --to 1992
 //   node scripts/cbr-import.mjs --year 1992
 //   node scripts/cbr-import.mjs --from 1992 --to 2026 --no-images   (только csv)
+//   node scripts/cbr-import.mjs --enrich-csv --from 1992 --to 2026   (дозаполнить аверс/реверс/тираж из ЦБ)
+//   node scripts/cbr-import.mjs --enrich-csv --mintage-only --from 1992 --to 2026  (только тираж для нулей)
+//   node scripts/cbr-import.mjs --enrich-csv --force --from 2010 --to 2010  (перезаписать поля)
 //
 // Идемпотентен: существующие slug'и в data/coins.csv не перезаписываются.
 // HTML-страницы кешируются в tmp/cbr-cache/ (повторный запуск — offline).
@@ -33,13 +36,16 @@ const UA = 'Mozilla/5.0 (numizmatrf-importer) Node';
 
 // --------------------------- cli -----------------------------
 function parseArgs(argv) {
-  const a = { from: null, to: null, images: true };
+  const a = { from: null, to: null, images: true, enrich: false, force: false, mintageOnly: false };
   for (let i = 0; i < argv.length; i += 1) {
     const v = argv[i];
     if (v === '--year') a.from = a.to = Number(argv[++i]);
     else if (v === '--from') a.from = Number(argv[++i]);
     else if (v === '--to') a.to = Number(argv[++i]);
     else if (v === '--no-images') a.images = false;
+    else if (v === '--enrich-csv') a.enrich = true;
+    else if (v === '--force') a.force = true;
+    else if (v === '--mintage-only') a.mintageOnly = true;
   }
   if (!a.from) a.from = 1992;
   if (!a.to) a.to = a.from;
@@ -199,8 +205,10 @@ function parseCoinPage(html) {
     .replace(/<style[\s\S]*?<\/style>/gi, ' ');
   const text = stripTags(decodeHtml(clean));
 
-  // Ограничим область от первого вхождения "Каталожный номер" (после header).
-  const start = text.lastIndexOf('Каталожный номер');
+  // Первое вхождение — блок характеристик монеты. lastIndexOf ломал разбор:
+  // в «Историко-тематической справке» снова встречается «Каталожный номер», и
+  // поля Аверс/Реверс оказывались вне body.
+  const start = text.indexOf('Каталожный номер');
   const end = text.indexOf('Страница была полезной');
   const body = text.slice(start, end > -1 ? end : text.length);
 
@@ -280,16 +288,32 @@ function mapType(catNum, seriesText) {
 }
 function mapSubPeriod(year) {
   if (year < 1992) return '1961-1991';
-  if (year <= 1997) return '1992-1993';
-  return '1997-present';
+  if (year < 1998) return '1992-1993';
+  return 'post-reform';
 }
+/** @returns {{ value: number, unit: 'рубль' | 'копейка' }} */
 function parseDenomination(text) {
   const t = text.toLowerCase().replace(/\s+/g, ' ');
-  if (t.includes('червонец')) return 10; // золотой червонец = 10 руб
+  if (t.includes('червонец')) return { value: 10, unit: 'рубль' };
   const m = t.match(/([\d\s]+)\s*(руб|коп)/);
-  if (!m) return 0;
+  if (!m) return { value: 0, unit: 'рубль' };
   const n = Number(m[1].replace(/\s+/g, ''));
-  return Number.isFinite(n) ? n : 0;
+  const unit = m[2].startsWith('коп') ? 'копейка' : 'рубль';
+  return { value: Number.isFinite(n) ? n : 0, unit };
+}
+function makeSlugFromDenom(denom, yr, name) {
+  const part = toSlug(name);
+  if (denom.unit === 'копейка') return `${denom.value}k-${yr}-${part}`;
+  return `${denom.value}r-${yr}-${part}`;
+}
+function buildAboutText(name, yr, detail) {
+  const m = parseMintage(detail.mintage);
+  const tail = (detail.reverseDesc || detail.obverseDesc || '').trim();
+  const bits = [];
+  if (m > 0) bits.push(`Тираж по данным Банка России — ${m.toLocaleString('ru-RU')} шт.`);
+  if (tail) bits.push(tail);
+  if (bits.length === 0) return '';
+  return bits.join(' ');
 }
 function parseYear(releaseDate, fallbackYear) {
   const m = releaseDate.match(/(\d{4})/);
@@ -311,9 +335,31 @@ function parseMintage(s) {
 
 // --------------------------- CSV -----------------------------
 const CSV_HEADER = [
-  'slug','название','номинал','год','монетный_двор','era','sub_period','type','material','series',
-  'тираж','диаметр_мм','толщина_мм','вес_г','гурт',
-  'цена_vf20','цена_ef40','цена_au50','цена_ms63','цена_ms65','описание'
+  'slug',
+  'название',
+  'номинал',
+  'единица_номинала',
+  'год',
+  'монетный_двор',
+  'era',
+  'sub_period',
+  'type',
+  'material',
+  'series',
+  'разновидность',
+  'тираж',
+  'диаметр_мм',
+  'толщина_мм',
+  'вес_г',
+  'гурт',
+  'цена_vf20',
+  'цена_ef40',
+  'цена_au50',
+  'цена_ms63',
+  'цена_ms65',
+  'описание',
+  'описание_аверс',
+  'описание_реверс'
 ];
 function escCsv(v) {
   const s = String(v ?? '');
@@ -353,7 +399,7 @@ async function importYear(year, opts) {
     }
     const denomination = parseDenomination(it.denomination);
     const yr = parseYear(it.releaseDate, year);
-    const slug = `${denomination}r-${yr}-${toSlug(it.name)}`;
+    const slug = makeSlugFromDenom(denomination, yr, it.name);
     if (slugs.has(slug)) {
       console.log(`  · skip ${slug} (уже есть)`);
       continue;
@@ -383,7 +429,8 @@ async function importYear(year, opts) {
     const row = {
       slug,
       'название': it.name,
-      'номинал': denomination,
+      'номинал': denomination.value,
+      'единица_номинала': denomination.unit === 'копейка' ? 'копейка' : 'рубль',
       'год': yr,
       'монетный_двор': mapMint(detail.mint),
       era: yr < 1992 ? 'ussr' : 'rf',
@@ -391,13 +438,16 @@ async function importYear(year, opts) {
       type: mapType(it.catNum, it.series),
       material: mapMaterial(detail.alloy || it.material),
       series: toSlug(it.series) || 'bez-serii',
+      'разновидность': '',
       'тираж': parseMintage(detail.mintage),
       'диаметр_мм': parseNumber(detail.diameterMm),
       'толщина_мм': parseNumber(detail.thicknessMm),
       'вес_г': parseNumber(detail.massG),
       'гурт': detail.edge || '',
       'цена_vf20': 0, 'цена_ef40': 0, 'цена_au50': 0, 'цена_ms63': 0, 'цена_ms65': 0,
-      'описание': detail.reverseDesc || detail.obverseDesc || ''
+      'описание': buildAboutText(it.name, yr, detail),
+      'описание_аверс': (detail.obverseDesc || '').trim(),
+      'описание_реверс': (detail.reverseDesc || '').trim()
     };
     out.push(row);
     slugs.add(slug);
@@ -414,11 +464,182 @@ async function importYear(year, opts) {
   return out;
 }
 
+/** Парсер CSV с кавычками — как в fill-descriptions.mjs */
+function parseCsv(raw) {
+  const rows = [];
+  let i = 0;
+  let f = '';
+  let row = [];
+  let q = false;
+  while (i < raw.length) {
+    const ch = raw[i];
+    if (q) {
+      if (ch === '"') {
+        if (raw[i + 1] === '"') {
+          f += '"';
+          i += 2;
+          continue;
+        }
+        q = false;
+        i++;
+        continue;
+      }
+      f += ch;
+      i++;
+      continue;
+    }
+    if (ch === '"') {
+      q = true;
+      i++;
+      continue;
+    }
+    if (ch === ',') {
+      row.push(f);
+      f = '';
+      i++;
+      continue;
+    }
+    if (ch === '\n' || ch === '\r') {
+      if (f.length || row.length) {
+        row.push(f);
+        rows.push(row);
+      }
+      row = [];
+      f = '';
+      if (ch === '\r' && raw[i + 1] === '\n') i += 2;
+      else i++;
+      continue;
+    }
+    f += ch;
+    i++;
+  }
+  if (f.length || row.length) {
+    row.push(f);
+    rows.push(row);
+  }
+  return rows;
+}
+
+function serializeCsv(rows) {
+  return rows.map((row) => row.map(escCsv).join(',')).join('\n') + '\n';
+}
+
+/**
+ * Дозаполняет `описание_аверс`, `описание_реверс`, при необходимости `описание`,
+ * пустые `тираж` / характеристики для юбилейных монет, slug которых совпадает с каталогом ЦБ.
+ */
+async function enrichCsv(args) {
+  const mintageOnly = Boolean(args.mintageOnly);
+  const raw = await readFile(CSV_PATH, 'utf8');
+  const rows = parseCsv(raw);
+  if (rows.length < 2) {
+    console.warn('CSV пуст или без строк данных.');
+    return;
+  }
+  const header = rows[0];
+  const ix = (name) => {
+    const i = header.indexOf(name);
+    if (i === -1) throw new Error(`В CSV нет колонки: ${name}`);
+    return i;
+  };
+  const slugI = ix('slug');
+  const typeI = ix('type');
+  const iObv = ix('описание_аверс');
+  const iRev = ix('описание_реверс');
+  const iDesc = ix('описание');
+  const iMint = ix('тираж');
+  const iDiam = ix('диаметр_мм');
+  const iThick = ix('толщина_мм');
+  const iWeight = ix('вес_г');
+  const iEdge = ix('гурт');
+  const iMd = ix('монетный_двор');
+
+  const bySlug = new Map();
+  for (let i = 1; i < rows.length; i += 1) {
+    bySlug.set(rows[i][slugI], i);
+  }
+
+  await mkdir(CACHE_DIR, { recursive: true });
+  let updated = 0;
+
+  for (let y = args.from; y <= args.to; y += 1) {
+    console.log(`[enrich ${y}] список ЦБ…`);
+    const listHtml = await fetchCached(LIST_URL(y), path.join(CACHE_DIR, `list-${y}.html`));
+    const items = parseYearList(listHtml);
+    for (const it of items) {
+      if (isPreciousMetal(it.material)) continue;
+      const denomination = parseDenomination(it.denomination);
+      const yr = parseYear(it.releaseDate, y);
+      const slug = makeSlugFromDenom(denomination, yr, it.name);
+      const rowIndex = bySlug.get(slug);
+      if (rowIndex === undefined) continue;
+      const row = rows[rowIndex];
+      if ((row[typeI] || '') !== 'jubilee') continue;
+
+      const needObv = !mintageOnly && (args.force || !(row[iObv] || '').trim());
+      const needRev = !mintageOnly && (args.force || !(row[iRev] || '').trim());
+      const needDesc = !mintageOnly && (args.force || !(row[iDesc] || '').trim());
+      const curMint = parseNumber(row[iMint]);
+      const needMint = args.force || curMint === 0;
+
+      if (!needObv && !needRev && !needDesc && !needMint) continue;
+
+      let detail;
+      try {
+        const coinHtml = await fetchCached(COIN_URL(it.catNum), path.join(CACHE_DIR, `coin-${it.catNum}.html`));
+        detail = parseCoinPage(coinHtml);
+      } catch (e) {
+        console.warn(`  · ${slug}: ${e.message}`);
+        continue;
+      }
+      if (isPreciousMetal(detail.alloy)) continue;
+
+      if (needObv) row[iObv] = (detail.obverseDesc || '').trim();
+      if (needRev) row[iRev] = (detail.reverseDesc || '').trim();
+      if (needDesc) {
+        const built = buildAboutText(it.name, yr, detail);
+        if (built) row[iDesc] = built;
+      }
+      if (needMint) {
+        const m = parseMintage(detail.mintage);
+        if (m > 0) row[iMint] = String(m);
+      }
+      if (!mintageOnly) {
+        const mm = mapMint(detail.mint);
+        if (mm && (!(row[iMd] || '').trim() || args.force)) row[iMd] = mm;
+      }
+
+      if (!mintageOnly) {
+        const dM = parseNumber(detail.diameterMm);
+        const tM = parseNumber(detail.thicknessMm);
+        const wM = parseNumber(detail.massG);
+        if (dM > 0 && (parseNumber(row[iDiam]) === 0 || args.force)) row[iDiam] = String(dM);
+        if (tM > 0 && (parseNumber(row[iThick]) === 0 || args.force)) row[iThick] = String(tM);
+        if (wM > 0 && (parseNumber(row[iWeight]) === 0 || args.force)) row[iWeight] = String(wM);
+        if ((detail.edge || '').trim() && (!(row[iEdge] || '').trim() || args.force)) row[iEdge] = detail.edge.trim();
+      }
+
+      updated += 1;
+      console.log(`  + enrich ${slug}${mintageOnly ? ' (тираж)' : ''}`);
+    }
+  }
+
+  await writeFile(CSV_PATH, serializeCsv(rows), 'utf8');
+  console.log(`\nОбогащение завершено. Обновлено записей: ${updated}.`);
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  console.log(`CBR import: ${args.from}–${args.to}, images=${args.images}`);
+  console.log(`CBR import: ${args.from}–${args.to}, images=${args.images}, enrich=${args.enrich}`);
   await mkdir(CACHE_DIR, { recursive: true });
   await mkdir(IMG_DIR, { recursive: true });
+
+  if (args.enrich) {
+    if (!args.from) args.from = 1992;
+    if (!args.to) args.to = 2026;
+    await enrichCsv(args);
+    return;
+  }
 
   let total = 0;
   for (let y = args.from; y <= args.to; y += 1) {

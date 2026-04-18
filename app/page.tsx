@@ -7,7 +7,6 @@ const HOME_SCOPE: CatalogScope = {
   basePath: '/',
   activePeriodSlug: null,
   title: 'Коллекционные юбилейные и регулярные монеты',
-  subtitle: 'Каталог монет России — от Древней Руси до Российской Федерации',
   breadcrumb: [{ label: 'Главная', href: '/' }, { label: 'Все монеты' }]
 };
 

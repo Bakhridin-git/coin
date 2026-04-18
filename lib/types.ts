@@ -48,5 +48,9 @@ export interface Coin {
   prices: CoinPrices;
   images: CoinImages;
   description: string;
+  /** Подпись сюжета аверса с сайта ЦБ; пусто — показывается шаблон «герб РФ…». */
+  obverseDescription: string;
+  /** Подпись реверса с сайта ЦБ; пусто — показывается общий шаблон. */
+  reverseDescription: string;
 }
 

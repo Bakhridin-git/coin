@@ -289,6 +289,14 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
       </div>
 
       <div className="main">
+        <aside className="cat-sidebar" aria-label="Разделы каталога">
+          <CategoryTree
+            tree={categoryTree}
+            total={categoryTotal}
+            activePeriodSlug={scope.activePeriodSlug}
+          />
+        </aside>
+
         <div className="catalog-filter-row">
           <FilterBar
             filters={filters}
@@ -304,14 +312,6 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
             onReset={resetFilters}
           />
         </div>
-
-        <aside className="cat-sidebar" aria-label="Разделы каталога">
-          <CategoryTree
-            tree={categoryTree}
-            total={categoryTotal}
-            activePeriodSlug={scope.activePeriodSlug}
-          />
-        </aside>
 
         <aside className={filtersOpen ? 'sidebar open' : 'sidebar'}>
           <div className="sidebar-header">

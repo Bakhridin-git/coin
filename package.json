@@ -10,7 +10,8 @@
     "lint": "next lint",
     "styles:catalog": "node scripts/scope-css.mjs preview.html catalog-scope app/catalog.css",
     "styles:coin": "node scripts/scope-css.mjs preview-coin.html coin-detail-scope app/coin-detail.css",
-    "styles": "npm run styles:catalog && npm run styles:coin"
+    "styles": "npm run styles:catalog && npm run styles:coin",
+    "photos:process": "node scripts/process-raw-photos.mjs"
   },
   "dependencies": {
     "next": "^15.4.0",
@@ -26,6 +27,7 @@
     "eslint": "^9.24.0",
     "eslint-config-next": "^15.4.0",
     "postcss": "^8.5.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"
   }

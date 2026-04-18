@@ -17,10 +17,10 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #f5f4f0;
       color: #1a1a1a;
-      /* Зазор между карточками монет в сетке */
-      --catalog-grid-gap: 20px;
-      /* Узже, чем сетка: фильтры ближе к меню, визуально «на одной линии» с колонкой */
-      --catalog-sidebar-gap: 12px;
+      /* Между карточками монет — меньше, чем зазор «меню | сетка» */
+      --catalog-grid-gap: 12px;
+      /* Горизонтальный зазор между колонкой меню и областью карточек/фильтров */
+      --catalog-sidebar-gap: 24px;
       /* Ширина колонки дерева категорий (совпадает с grid и отступом строки фильтров) */
       --catalog-sidebar-width: 280px;
     }
@@ -224,6 +224,8 @@
     }
 
     @media (min-width: 769px) {
+      /* [ дерево категорий | строка фильтров/сортировки ]
+       * [ дерево (вниз)    | сетка монет ] — фильтры выровнены с левым краем карточек */
       .catalog-scope .main {
         display: grid;
         grid-template-columns: var(--catalog-sidebar-width) 1fr;
@@ -234,15 +236,17 @@
       }
 
       .catalog-scope .catalog-filter-row {
-        grid-column: 1 / -1;
+        grid-column: 2;
         grid-row: 1;
         min-width: 0;
       }
 
       .catalog-scope .cat-sidebar {
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 1 / -1;
         margin-top: 0;
+        align-self: stretch;
+        min-height: 0;
       }
 
       .catalog-scope .main > .content {
@@ -254,9 +258,8 @@
 
     /* SIDEBAR
      *
-     * На десктопе фильтры — горизонтальный FilterBar в строке над колонками
-     * «меню | сетка» (см. `.catalog-filter-row`). Вертикальный сайдбар с чекбоксами
-     * не нужен — см. `@media` ниже (мобильный drawer). */
+     * На десктопе FilterBar в одной строке с левым меню (колонка 2), над сеткой.
+     * Вертикальный сайдбар с чекбоксами — только мобильный drawer. */
     .catalog-scope .sidebar {
       display: none;
     }

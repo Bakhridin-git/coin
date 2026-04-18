@@ -149,6 +149,8 @@ export async function getCoins(): Promise<Coin[]> {
   const iDesc = req('описание');
   const iUnit = opt('единица_номинала');
   const iVariant = opt('разновидность');
+  const iObv = opt('описание_аверс');
+  const iRev = opt('описание_реверс');
 
   const result: Coin[] = lines.map((line) => {
     const cells = parseCsvLine(line);
@@ -182,7 +184,9 @@ export async function getCoins(): Promise<Coin[]> {
         obverse: '',
         reverse: ''
       },
-      description: cells[iDesc] ?? ''
+      description: cells[iDesc] ?? '',
+      obverseDescription: (iObv >= 0 ? cells[iObv] : '') ?? '',
+      reverseDescription: (iRev >= 0 ? cells[iRev] : '') ?? ''
     };
 
     return coin;

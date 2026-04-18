@@ -138,10 +138,16 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
 
   // Описания обеих сторон и карточки «О монете» формируются из данных монеты.
   // Жёсткие упоминания конкретной серии убраны — это универсальный рендер.
-  const reverseDescription = coin.name
-    ? `На реверсе — изображения, связанные с темой «${coin.name}»${series ? ` (серия «${series.label}»)` : ''}. Номинал — ${denomLabel}.`
-    : `Реверс монеты ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`;
-  const obverseDescription = `Герб Российской Федерации. По кругу надпись «Банк России», внизу год выпуска «${coin.year}»${coin.mint ? `, обозначение монетного двора — ${coin.mint}` : ''}.`;
+  const reverseDescription =
+    coin.reverseDescription.trim().length > 0
+      ? coin.reverseDescription
+      : coin.name
+        ? `На реверсе — изображения, связанные с темой «${coin.name}»${series ? ` (серия «${series.label}»)` : ''}. Номинал — ${denomLabel}.`
+        : `Реверс монеты ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`;
+  const obverseDescription =
+    coin.obverseDescription.trim().length > 0
+      ? coin.obverseDescription
+      : `Герб Российской Федерации. По кругу надпись «Банк России», внизу год выпуска «${coin.year}»${coin.mint ? `, обозначение монетного двора — ${coin.mint}` : ''}.`;
   const aboutDescription =
     coin.description && coin.description.trim().length > 0
       ? coin.description

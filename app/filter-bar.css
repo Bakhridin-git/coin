@@ -1,6 +1,5 @@
-/* Full-width block above the two-column area — breadcrumb + H1 + subtitle.
- * Same max-width / horizontal padding as .main so the left edge of the title
- * lines up with the left edge of the category sidebar.
+/* Breadcrumb + H1 над `.main`. Ширина как у `.main` — левый край заголовка
+ * совпадает с левым краем блока каталога (включая колонку меню).
  */
 .catalog-scope .catalog-head {
   max-width: 1400px;
@@ -23,8 +22,8 @@
   line-height: 1.4;
 }
 
-/* Десктоп: [breadcrumb + title], затем строка фильтров на всю ширину .main,
- * затем [меню | сетка] — см. `.catalog-filter-row` + grid в catalog.css */
+/* Десктоп: [breadcrumb + title], затем в .main сетка [меню | фильтры] и
+ * [меню | сетка] — строка фильтров только над колонкой монет (catalog.css). */
 .catalog-scope .main {
   padding-top: 20px;
 }
@@ -52,7 +51,7 @@
 }
 
 @media (min-width: 769px) {
-  /* Ряд на всю ширину .main: левый край = у меню; [группа кнопок] + [Сбросить вправо] */
+  /* Ряд в колонке монет: [группа кнопок] + [Сбросить вправо], левый край = карточки */
   .catalog-scope .filter-bar {
     display: flex;
     flex-wrap: nowrap;

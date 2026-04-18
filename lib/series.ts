@@ -150,7 +150,7 @@ const SERIES_RULES: readonly SeriesRule[] = [
       label: 'Красная книга',
       h1: 'Монеты серии «Красная книга»'
     },
-    rawSlugs: ['krasnaya-kniga']
+    rawSlugs: ['krasnaya-kniga', 'krasnaya-kniga-sssr']
   },
   {
     series: {
