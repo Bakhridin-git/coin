@@ -31,11 +31,20 @@ interface SeriesRule {
 const SERIES_RULES: readonly SeriesRule[] = [
   {
     series: {
+      slug: 'krasnaya-kniga',
+      label: 'Красная книга',
+      h1: 'Монеты серии «Красная книга»'
+    },
+    rawSlugs: ['krasnaya-kniga', 'krasnaya-kniga-sssr']
+  },
+  {
+    series: {
       slug: 'bimetal-10r',
       label: 'Биметаллические (10р)',
       h1: 'Биметаллические 10-рублёвые монеты'
     },
-    rawSlugs: ['rossiyskaya-federatsiya', 'drevnie-goroda-rossii']
+    rawSlugs: ['rossiyskaya-federatsiya', 'drevnie-goroda-rossii'],
+    match: (c) => c.denomination === 10 && c.denominationUnit === 'рубль' && c.material === 'bimetal'
   },
   {
     series: {
@@ -43,7 +52,7 @@ const SERIES_RULES: readonly SeriesRule[] = [
       label: 'ГВС и аналогичные (10р)',
       h1: '10 рублей «Города воинской славы» и «Города трудовой доблести»'
     },
-    rawSlugs: ['goroda-voinskoy-slavy', 'goroda-slavy', 'goroda-trudovoy-doblesti']
+    rawSlugs: ['goroda-voinskoy-slavy', 'goroda-slavy', 'goroda-trudovoy-doblesti', 'chelovek-truda']
   },
   {
     series: {
@@ -51,7 +60,7 @@ const SERIES_RULES: readonly SeriesRule[] = [
       label: 'Города-герои',
       h1: 'Монеты серии «Города-герои»'
     },
-    rawSlugs: [],
+    rawSlugs: ['goroda-geroi'],
     match: (c) => /gorod-geroy/.test(c.slug)
   },
   {
@@ -87,8 +96,8 @@ const SERIES_RULES: readonly SeriesRule[] = [
     rawSlugs: [
       '70-letie-pobedy-v-velikoy-otechestvennoy-voyne-1941-1945-gg',
       '70-letie-pobedy-sovetskogo-naroda-v-velikoy-otechestvennoy-voyne-1941-1945-gg',
-      'goroda-stolitsy-gosudarstv-osvobozhdennye-sovetskimi-voyskami-ot-nemetsko-fashistskikh-zakhvatchikov',
-      '70-letie-razgroma-sovetskimi-voyskami-nemetsko-fashistskikh-voysk-v-stalingradskoy-bitve'
+      '70-letie-razgroma-sovetskimi-voyskami-nemetsko-fashistskikh-voysk-v-stalingradskoy-bitve',
+      'podvig-sovetskikh-voinov-srazhavshikhsya-na-krymskom-poluostrove-v-gody-velikoy-otechestvennoy-voyny-1941-1945-gg'
     ]
   },
   {
@@ -141,16 +150,24 @@ const SERIES_RULES: readonly SeriesRule[] = [
       label: 'Крымские события',
       h1: 'Монеты, посвящённые Крыму и Севастополю'
     },
-    rawSlugs: ['podvig-sovetskikh-voinov-srazhavshikhsya-na-krymskom-poluostrove-v-gody-velikoy-otechestvennoy-voyny-1941-1945-gg'],
-    match: (c) => /-krym|-sevastopol|krymsk/.test(c.slug)
+    rawSlugs: [],
+    match: (c) => /(-krym[^a]|-kryma-|-sevastopol|krymsk)/.test(c.slug) && c.year >= 2014
   },
   {
     series: {
-      slug: 'krasnaya-kniga',
-      label: 'Красная книга',
-      h1: 'Монеты серии «Красная книга»'
+      slug: 'arhitektura',
+      label: 'Архитектура',
+      h1: 'Памятники архитектуры'
     },
-    rawSlugs: ['krasnaya-kniga', 'krasnaya-kniga-sssr']
+    rawSlugs: ['pamyatniki-arkhitektury', 'pamyatniki-arkhitektury-rossii']
+  },
+  {
+    series: {
+      slug: 'goroda-stolitsy',
+      label: 'Города-столицы государств',
+      h1: 'Города-столицы государств, освобождённые советскими войсками'
+    },
+    rawSlugs: ['goroda-stolitsy-gosudarstv-osvobozhdennye-sovetskimi-voyskami-ot-nemetsko-fashistskikh-zakhvatchikov']
   },
   {
     series: {
@@ -181,7 +198,8 @@ const SERIES_RULES: readonly SeriesRule[] = [
       'xxvii-vsemirnaya-letnyaya-universiada-2013-goda-v-g-kazani',
       'khkhikh-vsemirnaya-zimnyaya-universiada-2019-goda-v-g-krasnoyarske',
       'rossiyskiy-sport',
-      'kosmos'
+      'kosmos',
+      'sobytiya'
     ]
   },
   {

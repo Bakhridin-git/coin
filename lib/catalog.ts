@@ -123,19 +123,6 @@ export interface CatalogFilters {
   sort: SortId;
 }
 
-export const EMPTY_FILTERS: CatalogFilters = {
-  q: '',
-  types: [],
-  materials: [],
-  mints: [],
-  series: null,
-  subPeriod: null,
-  denominations: [],
-  yearFrom: null,
-  yearTo: null,
-  sort: DEFAULT_SORT
-};
-
 function parseIntOrNull(value: string | null): number | null {
   if (!value) return null;
   const n = Number(value);
@@ -310,7 +297,6 @@ export interface FilterCounts {
   mint: Record<string, number>;
   /** Ключ — строковое представление `DenominationKey` (`"10r"`, `"50k"`). */
   denomination: Record<string, number>;
-  year: Record<number, number>;
 }
 
 export function countByFilter(coins: Coin[]): FilterCounts {
@@ -318,8 +304,7 @@ export function countByFilter(coins: Coin[]): FilterCounts {
     type: { regular: 0, jubilee: 0, sets: 0, regional: 0 },
     material: { bimetal: 0, gvs: 0, silver: 0, gold: 0, cupronickel: 0, galvanic: 0 },
     mint: {},
-    denomination: {},
-    year: {}
+    denomination: {}
   };
 
   for (const c of coins) {
@@ -328,7 +313,6 @@ export function countByFilter(coins: Coin[]): FilterCounts {
     counts.mint[c.mint] = (counts.mint[c.mint] ?? 0) + 1;
     const dkey = denomKeyToString({ value: c.denomination, unit: c.denominationUnit });
     counts.denomination[dkey] = (counts.denomination[dkey] ?? 0) + 1;
-    counts.year[c.year] = (counts.year[c.year] ?? 0) + 1;
   }
 
   return counts;
