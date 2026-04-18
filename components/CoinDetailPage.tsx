@@ -138,22 +138,31 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
 
   // Описания обеих сторон и карточки «О монете» формируются из данных монеты.
   // Жёсткие упоминания конкретной серии убраны — это универсальный рендер.
-  const reverseDescription =
+  const formatDesc = (s: string) => {
+    const t = s.trim();
+    if (!t) return t;
+    const capped = t.charAt(0).toUpperCase() + t.slice(1);
+    return /[.!?»]$/.test(capped) ? capped : capped + '.';
+  };
+  const reverseDescription = formatDesc(
     coin.reverseDescription.trim().length > 0
       ? coin.reverseDescription
       : coin.name
         ? `На реверсе — изображения, связанные с темой «${coin.name}»${series ? ` (серия «${series.label}»)` : ''}. Номинал — ${denomLabel}.`
-        : `Реверс монеты ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`;
-  const obverseDescription =
+        : `Реверс монеты ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`
+  );
+  const obverseDescription = formatDesc(
     coin.obverseDescription.trim().length > 0
       ? coin.obverseDescription
-      : `Герб Российской Федерации. По кругу надпись «Банк России», внизу год выпуска «${coin.year}»${coin.mint ? `, обозначение монетного двора — ${coin.mint}` : ''}.`;
-  const aboutDescription =
+      : `Герб Российской Федерации. По кругу надпись «Банк России», внизу год выпуска «${coin.year}»${coin.mint ? `, обозначение монетного двора — ${coin.mint}` : ''}.`
+  );
+  const aboutDescription = formatDesc(
     coin.description && coin.description.trim().length > 0
       ? coin.description
       : coin.name
         ? `${coin.name} — памятная монета${series ? ` серии «${series.label}»` : ''}, выпущенная в ${coin.year} году${coin.mint ? ` на ${coin.mint}` : ''}.`
-        : `Монета ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`;
+        : `Монета ${denomLabel} ${coin.year} года${coin.mint ? `, ${coin.mint}` : ''}.`
+  );
 
   const onFlip = () => {
     setFlipped((v) => !v);
