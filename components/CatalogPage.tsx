@@ -116,7 +116,7 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
   }, [pageFromUrl, effectivePage, filters, scope.basePath, router]);
 
   const getPageHref = useCallback(
-    (page: number) => `${scope.basePath}${buildSearchString(filters, page)}`,
+    (page: number) => `${scope.basePath}${buildSearchString({ ...filters, q: '' }, page)}`,
     [filters, scope.basePath]
   );
 

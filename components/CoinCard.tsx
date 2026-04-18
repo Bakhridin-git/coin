@@ -30,7 +30,7 @@ export function CoinCard({ coin, imagePriority = false }: CoinCardProps) {
   return (
     <div className="coin-card">
       <div className="coin-image-wrap">
-        <Link href={href} className="coin-image-wrap__link" scroll={false}>
+        <Link href={href} className="coin-image-wrap__link">
           <div
             className={['coin-card-flip', flipped ? 'coin-card-flip--flipped' : '']
               .filter(Boolean)
@@ -75,7 +75,7 @@ export function CoinCard({ coin, imagePriority = false }: CoinCardProps) {
           ↻ перевернуть
         </button>
       </div>
-      <Link href={href} className="coin-info" scroll={false} title={title}>
+      <Link href={href} className="coin-info" title={title}>
         {series && <div className="coin-series">{series.label}</div>}
         <div className="coin-name">{title}</div>
       </Link>

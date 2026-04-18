@@ -56,16 +56,18 @@ function buildSeriesChildren(
     if (!s) continue;
     counts.set(s.slug, (counts.get(s.slug) ?? 0) + 1);
   }
-  return ALL_SERIES.flatMap((s) => {
-    const n = counts.get(s.slug) ?? 0;
-    if (n === 0) return [];
-    return [{
-      id: `${periodSlug}-jubilee-${s.slug}`,
-      label: s.label,
-      href: `/period/${periodSlug}?${PARAM.type}=jubilee&${PARAM.series}=${s.slug}`,
-      count: n
-    }];
-  });
+  return ALL_SERIES
+    .flatMap((s) => {
+      const n = counts.get(s.slug) ?? 0;
+      if (n === 0) return [];
+      return [{
+        id: `${periodSlug}-jubilee-${s.slug}`,
+        label: s.label,
+        href: `/period/${periodSlug}?${PARAM.type}=jubilee&${PARAM.series}=${s.slug}`,
+        count: n
+      }];
+    })
+    .sort((a, b) => (b.count ?? 0) - (a.count ?? 0));
 }
 
 export function buildCategoryTree(coins: Coin[]): CategoryNode[] {

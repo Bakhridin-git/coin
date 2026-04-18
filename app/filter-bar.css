@@ -93,10 +93,11 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  height: 40px;
   background: #fff;
   border: 1px solid #e8e6e0;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 0 14px;
   font-family: inherit;
   font-size: 13px;
   font-weight: 600;
