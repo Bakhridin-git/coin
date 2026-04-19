@@ -40,7 +40,7 @@ const MATERIAL_LABEL: Record<Coin['material'], string> = {
   galvanic: 'Сталь с гальваническим покрытием',
   gvs: 'Сталь с латунным покрытием',
   bimetal: 'Биметалл',
-  cupronickel: 'Мельхиор',
+  cupronickel: 'Медно-никелевый сплав',
   silver: 'Серебро',
   gold: 'Золото'
 };

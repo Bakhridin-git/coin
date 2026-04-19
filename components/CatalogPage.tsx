@@ -17,7 +17,7 @@ import {
   buildSearchString,
   COIN_MATERIAL_OPTIONS,
   COIN_TYPE_OPTIONS,
-  countByFilter,
+  facetCounts,
   denomKeyToString,
   denominationOptions,
   MINT_OPTIONS,
@@ -80,7 +80,7 @@ function CatalogPageInner({ coins, scope, categoryTree, categoryTotal }: Catalog
     [searchParams]
   );
 
-  const counts = useMemo(() => countByFilter(coins), [coins]);
+  const counts = useMemo(() => facetCounts(coins, filters), [coins, filters]);
   const denominations = useMemo(() => denominationOptions(coins), [coins]);
   const years = useMemo(() => yearOptions(coins), [coins]);
 

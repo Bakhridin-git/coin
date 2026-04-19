@@ -79,7 +79,7 @@ export const COIN_MATERIAL_OPTIONS: ReadonlyArray<{ id: CoinMaterial; label: str
   { id: 'bimetal', label: 'Биметалл' },
   { id: 'silver', label: 'Серебро' },
   { id: 'gold', label: 'Золото' },
-  { id: 'cupronickel', label: 'Мельхиор' },
+  { id: 'cupronickel', label: 'Медно-никелевый сплав' },
   { id: 'gvs', label: 'Сталь/гальваника' }
 ];
 
@@ -286,11 +286,6 @@ export function applySort(coins: Coin[], sort: SortId): Coin[] {
   }
 }
 
-/**
- * Counts coins per filter option using the full, unfiltered dataset so the
- * sidebar shows "how many are available in total", not "how many remain after
- * the current filters". This is the simplest, least confusing UX for MVP.
- */
 export interface FilterCounts {
   type: Record<CoinType, number>;
   material: Record<CoinMaterial, number>;
@@ -299,14 +294,13 @@ export interface FilterCounts {
   denomination: Record<string, number>;
 }
 
-export function countByFilter(coins: Coin[]): FilterCounts {
+function _count(coins: Coin[]): FilterCounts {
   const counts: FilterCounts = {
     type: { regular: 0, jubilee: 0, sets: 0, regional: 0 },
     material: { bimetal: 0, gvs: 0, silver: 0, gold: 0, cupronickel: 0, galvanic: 0 },
     mint: {},
     denomination: {}
   };
-
   for (const c of coins) {
     counts.type[c.type]++;
     counts.material[c.material]++;
@@ -314,8 +308,34 @@ export function countByFilter(coins: Coin[]): FilterCounts {
     const dkey = denomKeyToString({ value: c.denomination, unit: c.denominationUnit });
     counts.denomination[dkey] = (counts.denomination[dkey] ?? 0) + 1;
   }
-
   return counts;
+}
+
+export function countByFilter(coins: Coin[]): FilterCounts {
+  return _count(coins);
+}
+
+/**
+ * Faceted counts: each dimension is counted against coins filtered by all
+ * OTHER active dimensions. This way selecting a type still shows available
+ * materials/mints/denominations within that type, and multi-select within a
+ * dimension (e.g. two materials) keeps showing all options for that dimension.
+ */
+export function facetCounts(coins: Coin[], filters: CatalogFilters): FilterCounts {
+  const without = (omit: Partial<CatalogFilters>) =>
+    applyFilters(coins, { ...filters, sort: 'popular', ...omit });
+
+  const forType     = without({ types: [] });
+  const forMaterial = without({ materials: [] });
+  const forMint     = without({ mints: [] });
+  const forDenom    = without({ denominations: [] });
+
+  return {
+    type:         _count(forType).type,
+    material:     _count(forMaterial).material,
+    mint:         _count(forMint).mint,
+    denomination: _count(forDenom).denomination,
+  };
 }
 
 /** Number of filter categories currently non-default. Used for the badge. */

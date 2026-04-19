@@ -43,29 +43,29 @@
 }
 
 .cat-tree-row.is-active {
-  background: #c9a84c;
+  background: transparent;
   border-radius: 8px;
 }
 
 .cat-tree-row.is-active:hover {
-  background: #b89340;
+  background: #faf9f7;
 }
 
 .cat-tree-row.is-active .cat-tree-label {
-  color: #1a1a2e;
+  color: #9a7830;
   font-weight: 700;
 }
 
 .cat-tree-row.is-active .cat-tree-count {
-  color: rgba(26, 26, 46, 0.55);
+  color: #b89340;
 }
 
 .cat-tree-row.is-active .cat-tree-link {
-  color: #1a1a2e;
+  color: #9a7830;
 }
 
 .cat-tree-row.is-active .cat-tree-link:hover {
-  color: #1a1a2e;
+  color: #7a5e20;
 }
 
 /* Колонка под иконку — фиксированная ширина, иконка по центру ячейки,

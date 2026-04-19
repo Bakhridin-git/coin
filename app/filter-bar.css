@@ -117,8 +117,9 @@
 }
 
 .catalog-scope .filter-dd-btn.is-active {
-  background: #c9a84c;
-  border-color: #c9a84c;
+  background: #fff;
+  border-color: #b89340;
+  color: #9a7830;
 }
 
 .catalog-scope .filter-dd-chev {
@@ -147,7 +148,7 @@
 }
 
 .catalog-scope .filter-dd-btn.is-active .filter-dd-badge {
-  background: #1a1a2e;
+  background: #9a7830;
   color: #fff;
 }
 
@@ -192,13 +193,13 @@
 }
 
 .catalog-scope .filter-dd-item.is-active {
-  background: #c9a84c;
-  color: #1a1a2e;
+  background: transparent;
+  color: #9a7830;
   font-weight: 700;
 }
 
 .catalog-scope .filter-dd-item.is-active .filter-dd-count {
-  color: rgba(26, 26, 46, 0.55);
+  color: #b89340;
 }
 
 .catalog-scope .filter-dd-item input[type='checkbox'] {
@@ -245,18 +246,17 @@
 }
 
 .catalog-scope .filter-dd-btn--sort {
-  background: #c9a84c;
-  border-color: #c9a84c;
+  background: #fff;
+  border-color: #e8e6e0;
 }
 
 .catalog-scope .filter-dd-btn--sort:hover {
-  background: #b89340;
-  border-color: #b89340;
+  border-color: #c9a84c;
 }
 
 .catalog-scope .filter-dd-btn--sort.is-open {
-  background: #b89340;
-  border-color: #b89340;
+  border-color: #c9a84c;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18);
 }
 
 .catalog-scope .filter-dd-btn--sort .filter-dd-icon {

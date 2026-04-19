@@ -99,7 +99,7 @@ export function FilterBar({
           </FilterDropdown>
 
           <FilterDropdown label="Тип" activeCount={filters.types.length}>
-            {COIN_TYPE_OPTIONS.map((opt) => (
+            {COIN_TYPE_OPTIONS.filter((opt) => (counts.type[opt.id] ?? 0) > 0 || filters.types.includes(opt.id)).map((opt) => (
               <label key={opt.id} className="filter-dd-item">
                 <input
                   type="checkbox"
@@ -114,7 +114,7 @@ export function FilterBar({
         </div>
 
         <FilterDropdown label="Материал" activeCount={filters.materials.length}>
-          {COIN_MATERIAL_OPTIONS.map((opt) => (
+          {COIN_MATERIAL_OPTIONS.filter((opt) => (counts.material[opt.id] ?? 0) > 0 || filters.materials.includes(opt.id)).map((opt) => (
             <label key={opt.id} className="filter-dd-item">
               <input
                 type="checkbox"
@@ -128,7 +128,10 @@ export function FilterBar({
         </FilterDropdown>
 
         <FilterDropdown label="Номинал" activeCount={filters.denominations.length}>
-          {denominations.map((d) => {
+          {denominations.filter((d) => {
+            const key = denomKeyToString(d);
+            return (counts.denomination[key] ?? 0) > 0 || filters.denominations.some((x) => denomKeyToString(x) === key);
+          }).map((d) => {
             const key = denomKeyToString(d);
             const checked = filters.denominations.some((x) => denomKeyToString(x) === key);
             return (
@@ -167,7 +170,7 @@ export function FilterBar({
         )}
 
         <FilterDropdown label="Монетный двор" activeCount={filters.mints.length}>
-          {MINT_OPTIONS.map((opt) => (
+          {MINT_OPTIONS.filter((opt) => (counts.mint[opt.id] ?? 0) > 0 || filters.mints.includes(opt.id)).map((opt) => (
             <label key={opt.id} className="filter-dd-item">
               <input
                 type="checkbox"
