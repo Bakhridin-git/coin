@@ -248,6 +248,7 @@
 .catalog-scope .filter-dd-btn--sort {
   background: #fff;
   border-color: #e8e6e0;
+  color: #9a7830;
 }
 
 .catalog-scope .filter-dd-btn--sort:hover {
@@ -260,7 +261,7 @@
 }
 
 .catalog-scope .filter-dd-btn--sort .filter-dd-icon {
-  color: #1a1a2e;
+  color: #9a7830;
   opacity: 1;
 }
 
