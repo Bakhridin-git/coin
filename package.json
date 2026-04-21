@@ -11,7 +11,11 @@
     "styles:catalog": "node scripts/scope-css.mjs preview.html catalog-scope app/catalog.css",
     "styles:coin": "node scripts/scope-css.mjs preview-coin.html coin-detail-scope app/coin-detail.css",
     "styles": "npm run styles:catalog && npm run styles:coin",
-    "photos:process": "node scripts/process-raw-photos.mjs"
+    "photos:process": "node scripts/process-raw-photos.mjs && node scripts/sync-shared-reverses.mjs",
+    "photos:process:staging": "PHOTOS_OUTPUT=assets/processed-photos node scripts/process-raw-photos.mjs",
+    "import:monetnik-bimetal": "node scripts/import-monetnik-bimetal-10r.mjs",
+    "import:monetnik-bimetal:crawl-all": "MONETNIK_ALLOW_FULL_CATALOG_CRAWL=1 node scripts/import-monetnik-bimetal-10r.mjs",
+    "import:goroda-geroi": "node scripts/import-monetnik-goroda-geroi.mjs"
   },
   "dependencies": {
     "next": "^15.4.0",

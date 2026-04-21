@@ -1,11 +1,14 @@
 /**
- * Читает PNG/JPEG из «Необработанные фото», центрированно обрезает квадрат,
- * приводит к 900×900, сохраняет JPEG в «Обработанные».
+ * Читает PNG/JPEG/WebP/AVIF из каталога исходников, центрированно обрезает квадрат,
+ * приводит к 900×900, сохраняет JPEG в каталог результата (по умолчанию public/images/coins).
  *
- * Имена: data/photo-mapping.csv
- *   • формат A: index,out_stem → файл {out_stem}.jpg
- *   • формат B: index,slug,side → файл {slug}-{side}.jpg
- * Без маппинга: 001.jpg, 002.jpg, …
+ * Имена выходных файлов:
+ *   • data/photo-file-map.csv — колонки filename,out_stem → {out_stem}.jpg (точное имя файла-исходника)
+ *   • авто: 10r-…-obverse_*.jpg / 10r-…-reverse_*.jpg → {slug}-obverse.jpg и т.д.
+ *   • data/photo-mapping.csv — по индексу (index,out_stem или index,slug,side) для снимков по порядку сортировки
+ *
+ * По умолчанию: assets/raw-photos → public/images/coins
+ * Переопределение: PHOTOS_INPUT, PHOTOS_OUTPUT (пути от корня репозитория)
  *
  * Запуск: npm run photos:process
  */
@@ -17,15 +20,25 @@ import sharp from 'sharp';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
-const INPUT_DIR = path.join(ROOT, 'Необработанные фото');
-const OUTPUT_DIR = path.join(ROOT, 'Обработанные');
-const MAPPING_PATH = path.join(ROOT, 'data', 'photo-mapping.csv');
-const MANIFEST_PATH = path.join(OUTPUT_DIR, 'manifest.csv');
+
+const INPUT_DIR = process.env.PHOTOS_INPUT
+  ? path.join(ROOT, process.env.PHOTOS_INPUT)
+  : path.join(ROOT, 'assets', 'raw-photos');
+const OUTPUT_DIR = process.env.PHOTOS_OUTPUT
+  ? path.join(ROOT, process.env.PHOTOS_OUTPUT)
+  : path.join(ROOT, 'public', 'images', 'coins');
+const MAPPING_PATH = process.env.PHOTO_MAPPING
+  ? path.join(ROOT, process.env.PHOTO_MAPPING)
+  : path.join(ROOT, 'data', 'photo-mapping.csv');
+const FILE_MAP_PATH = process.env.PHOTO_FILE_MAP
+  ? path.join(ROOT, process.env.PHOTO_FILE_MAP)
+  : path.join(ROOT, 'data', 'photo-file-map.csv');
+const MANIFEST_PATH = path.join(ROOT, 'assets', 'photo-process-manifest.csv');
 
 const SIZE = 900;
 const JPEG_QUALITY = 82;
 
-const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp']);
+const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif']);
 
 /**
  * @returns {Map<number, { mode: 'stem'; stem: string } | { mode: 'slug'; slug: string; side: string }>}
@@ -73,6 +86,46 @@ function splitCsvLine(line) {
   return line.split(',').map((c) => c.trim());
 }
 
+/**
+ * filename,out_stem — out_stem без .jpg (полное имя вида 10r-…-obverse).
+ * @returns {Map<string, string>}
+ */
+function parseFileMap(csvText) {
+  const lines = csvText.trim().split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) return new Map();
+  /** @type {Map<string, string>} */
+  const map = new Map();
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    const comma = line.indexOf(',');
+    if (comma < 0) continue;
+    let filename = line.slice(0, comma).trim();
+    let stem = line.slice(comma + 1).trim();
+    if (filename.startsWith('"') && filename.endsWith('"')) filename = filename.slice(1, -1).replace(/""/g, '"');
+    if (stem.startsWith('"') && stem.endsWith('"')) stem = stem.slice(1, -1).replace(/""/g, '"');
+    if (filename && stem) map.set(filename, stem);
+  }
+  return map;
+}
+
+/**
+ * 10r-…-obverse_… / 10r-…-reverse.… → полный stem для .jpg
+ * @param {string} basename
+ * @returns {string | null}
+ */
+function autoStemFromCoinFilename(basename) {
+  const base = basename.replace(/\.[^.]+$/i, '');
+  const obv = base.lastIndexOf('-obverse');
+  const rev = base.lastIndexOf('-reverse');
+  if (obv !== -1 && rev !== -1) {
+    const useObv = obv > rev;
+    return useObv ? base.slice(0, obv + '-obverse'.length) : base.slice(0, rev + '-reverse'.length);
+  }
+  if (obv !== -1) return base.slice(0, obv + '-obverse'.length);
+  if (rev !== -1) return base.slice(0, rev + '-reverse'.length);
+  return null;
+}
+
 async function loadMapping() {
   try {
     const text = await readFile(MAPPING_PATH, 'utf8');
@@ -82,9 +135,13 @@ async function loadMapping() {
   }
 }
 
-function mappedToFilename(mapped) {
-  if (mapped.mode === 'stem') return `${mapped.stem}.jpg`;
-  return `${mapped.slug}-${mapped.side}.jpg`;
+async function loadFileMap() {
+  try {
+    const text = await readFile(FILE_MAP_PATH, 'utf8');
+    return parseFileMap(text);
+  } catch {
+    return new Map();
+  }
 }
 
 function mappedToLogFields(mapped) {
@@ -92,9 +149,19 @@ function mappedToLogFields(mapped) {
   return { slug: mapped.slug, side: mapped.side };
 }
 
+/**
+ * @param {{ mode: 'stem'; stem: string } | { mode: 'slug'; slug: string; side: string }} mapped
+ * @returns {string}
+ */
+function stemFromMapped(mapped) {
+  if (mapped.mode === 'stem') return mapped.stem;
+  return `${mapped.slug}-${mapped.side}`;
+}
+
 async function main() {
   await mkdir(OUTPUT_DIR, { recursive: true });
   const mapping = await loadMapping();
+  const fileMap = await loadFileMap();
 
   const names = (await readdir(INPUT_DIR))
     .filter((n) => IMAGE_EXT.has(path.extname(n).toLowerCase()))
@@ -106,6 +173,7 @@ async function main() {
   }
 
   const rows = ['index,source_file,output_file,slug,side'];
+  const skipped = [];
 
   let index = 0;
   for (const name of names) {
@@ -123,19 +191,30 @@ async function main() {
     const left = Math.floor((w - sideLen) / 2);
     const top = Math.floor((h - sideLen) / 2);
 
-    const mapped = mapping.get(index);
-    let outName;
+    let stem;
     let slugOut = '';
     let sideOut = '';
-    if (mapped) {
-      outName = mappedToFilename(mapped);
-      const log = mappedToLogFields(mapped);
+    const fromFile = fileMap.get(name);
+    const fromAuto = autoStemFromCoinFilename(name);
+    const fromIndex = mapping.get(index);
+
+    if (fromFile) {
+      stem = fromFile;
+      slugOut = stem;
+    } else if (fromAuto) {
+      stem = fromAuto;
+      slugOut = stem;
+    } else if (fromIndex) {
+      stem = stemFromMapped(fromIndex);
+      const log = mappedToLogFields(fromIndex);
       slugOut = log.slug;
       sideOut = log.side;
     } else {
-      outName = `${String(index).padStart(3, '0')}.jpg`;
+      skipped.push(name);
+      continue;
     }
 
+    const outName = `${stem}.jpg`;
     const outputPath = path.join(OUTPUT_DIR, outName);
 
     await sharp(inputPath)
@@ -153,9 +232,13 @@ async function main() {
   await writeFile(MANIFEST_PATH, rows.join('\n'), 'utf8');
   console.log(`\nГотово: ${OUTPUT_DIR}`);
   console.log(`Манифест: ${MANIFEST_PATH}`);
-  if (mapping.size === 0) {
+  if (skipped.length > 0) {
+    console.log(`\nПропущено (нет строки в ${path.basename(FILE_MAP_PATH)}, не распознано имя и нет index в photo-mapping): ${skipped.length} файл(ов)`);
+    for (const s of skipped) console.log(`  - ${s}`);
+  }
+  if (mapping.size === 0 && fileMap.size === 0) {
     console.log(
-      '\nПодпись: задайте data/photo-mapping.csv (index,out_stem или index,slug,side) и перезапустите npm run photos:process'
+      `\nПодсказка: задайте data/photo-file-map.csv или имена вида 10r-…-obverse_… / …-reverse_…, либо data/photo-mapping.csv`
     );
   }
 }

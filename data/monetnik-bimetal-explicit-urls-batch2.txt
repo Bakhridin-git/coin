@@ -1,0 +1,11 @@
+# Пример архива (не автоимпорт). Только явный запуск с MONETNIK_EXPLICIT_FILE=этот/файл
+
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drugie/10-rublej-2000-spmd-55-49311/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drugie/10-rublej-2001-spmd-40-49314/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-mmd-49866/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-mmd-49865/
+https://www.monetnik.ru/monety/rossii/jubilejnye/10-rublej-2004-mmd-16680/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2004-mmd-867539/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2005-spmd-49634/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2004-spmd-kem-764574/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drugie/10-rublej-2005-spmd-60-49645/

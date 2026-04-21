@@ -1,0 +1,23 @@
+# Пример архива URL (не запускается автоматически). Кладите только те ссылки, которые нужно импортировать.
+# Запуск вручную: MONETNIK_EXPLICIT_FILE=data/monetnik-bimetal-explicit-urls.txt node scripts/import-monetnik-bimetal-10r.mjs
+
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drugie/10-rublej-2000-mmd-55-let-742145/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drugie/10-rublej-2001-mmd-40-719604/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-mmd-840138/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2002-spmd-773628/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2002-spmd-50264/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2002-spmd-50262/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-spmd-43649/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-spmd-123256/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-spmd-49864/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-spmd-736841/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2002-mmd-864824/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-spmd-49867/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/ministerstva/10-rublej-2002-mmd-843733/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-spmd-49639/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-mmd-730843/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-spmd-pskov-730844/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-spmd-pskov-49637/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-mmd-753816/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-spmd-737895/
+https://www.monetnik.ru/monety/rossii/jubilejnye/bimetall-10-rublej/drevnie-goroda/10-rublej-2003-spmd-murom-49648/

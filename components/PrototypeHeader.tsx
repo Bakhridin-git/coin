@@ -119,8 +119,16 @@ function PrototypeHeaderInner({ categoryTree, categoryTotal }: PrototypeHeaderPr
           setSuggestions([]);
           return;
         }
-        const data = (await res.json()) as { results: SearchSuggestion[] };
-        setSuggestions(data.results);
+        const text = await res.text();
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(text) as unknown;
+        } catch {
+          setSuggestions([]);
+          return;
+        }
+        const data = parsed as { results?: SearchSuggestion[] };
+        setSuggestions(Array.isArray(data.results) ? data.results : []);
         setHighlight(-1);
       } catch (e) {
         if ((e as Error).name === 'AbortError') return;

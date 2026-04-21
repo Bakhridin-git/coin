@@ -110,7 +110,18 @@ export async function getCoins(): Promise<Coin[]> {
     return cached;
   }
 
-  if (cached !== null && st.mtimeMs === cachedMtimeMs) return cached;
+  /** Без инвалидации по папке с JPEG кэш «залипал» на заглушках после добавления файлов. */
+  if (cached !== null && st.mtimeMs === cachedMtimeMs) {
+    return Promise.all(
+      cached.map(async (c) => ({
+        ...c,
+        images: {
+          obverse: await pickPublicImage(c.slug, 'obverse'),
+          reverse: await pickPublicImage(c.slug, 'reverse')
+        }
+      }))
+    );
+  }
 
   const raw = await readFile(csvPath, 'utf8');
   const lines = raw.split(/\r?\n/).filter(Boolean);
