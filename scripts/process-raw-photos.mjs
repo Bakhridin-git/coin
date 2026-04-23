@@ -13,7 +13,7 @@
  * Запуск: npm run photos:process
  */
 
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -37,6 +37,9 @@ const MANIFEST_PATH = path.join(ROOT, 'assets', 'photo-process-manifest.csv');
 
 const SIZE = 900;
 const JPEG_QUALITY = 82;
+
+/** Не перезаписывать уже лежащие в public JPEG (новые партии только дополняют). Перезапись: PHOTOS_OVERWRITE=1 */
+const SKIP_EXISTING_OUTPUT = process.env.PHOTOS_OVERWRITE !== '1';
 
 const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif']);
 
@@ -216,6 +219,16 @@ async function main() {
 
     const outName = `${stem}.jpg`;
     const outputPath = path.join(OUTPUT_DIR, outName);
+
+    if (SKIP_EXISTING_OUTPUT) {
+      try {
+        await access(outputPath);
+        console.log(`Пропуск (файл уже есть): ${outName} ← ${name}`);
+        continue;
+      } catch {
+        /* write */
+      }
+    }
 
     await sharp(inputPath)
       .extract({ left, top, width: sideLen, height: sideLen })
