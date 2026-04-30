@@ -1,5 +1,6 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
+import { COIN_IMAGE_PLACEHOLDER_SRC, ENV } from '../constants';
 import { Coin, DenominationUnit } from '../types';
 
 function isEnoent(e: unknown): e is NodeJS.ErrnoException {
@@ -51,7 +52,15 @@ async function pickPublicImage(slug: string, side: 'obverse' | 'reverse'): Promi
     if (idx.files.has(filename)) return `${basePublic}${path.extname(filename)}`;
   }
 
-  return '/images/coin-placeholder.svg';
+  return COIN_IMAGE_PLACEHOLDER_SRC;
+}
+
+function coinHasBothRealImages(c: Coin): boolean {
+  return c.images.obverse !== COIN_IMAGE_PLACEHOLDER_SRC && c.images.reverse !== COIN_IMAGE_PLACEHOLDER_SRC;
+}
+
+function shouldHideCoinsWithoutImages(): boolean {
+  return (process.env[ENV.hideCoinsWithoutImages] ?? '').trim() === '1';
 }
 
 function parseCsvLine(line: string): string[] {
@@ -120,7 +129,7 @@ let cached: Coin[] | null = null;
 let cachedMtimeMs = 0;
 let cachedImagesDirMtimeMs = -2;
 
-export async function getCoins(): Promise<Coin[]> {
+async function getAllCoins(): Promise<Coin[]> {
   const csvPath = path.join(process.cwd(), 'data', 'coins.csv');
   let st: Awaited<ReturnType<typeof stat>>;
   try {
@@ -247,6 +256,12 @@ export async function getCoins(): Promise<Coin[]> {
   cachedMtimeMs = st.mtimeMs;
   cachedImagesDirMtimeMs = idx.dirMtimeMs;
   return withImages;
+}
+
+export async function getCoins(): Promise<Coin[]> {
+  const coins = await getAllCoins();
+  if (!shouldHideCoinsWithoutImages()) return coins;
+  return coins.filter(coinHasBothRealImages);
 }
 
 export async function getCoinBySlug(slug: string): Promise<Coin | null> {

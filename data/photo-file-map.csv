@@ -170,8 +170,8 @@ filename,out_stem
 Брянск реверс.avif,10r-2010-bryansk-x-v-reverse
 Воронежская область аверс.avif,10r-2011-voronezhskaya-oblast-obverse
 Воронежская область реверс.avif,10r-2011-voronezhskaya-oblast-reverse
-Елец аверс.avif,10r-2011-elets-lipetskaya-oblast-obverse
-Елец реверс.avif,10r-2011-elets-lipetskaya-oblast-reverse
+Елец аверс.avif,10r-2011-elets-obverse
+Елец реверс.avif,10r-2011-elets-reverse
 Ненецкий автономный округ аверес.avif,10r-2010-nenetskiy-avtonomnyy-okrug-obverse
 Ненецкий автономный округ реверс.avif,10r-2010-nenetskiy-avtonomnyy-okrug-reverse
 Ненецкий автономный округ аверес.avif,10r-2010-nenetskiy-avtonomnyy-okrug-obverse
@@ -216,8 +216,8 @@ filename,out_stem
 Белгородская область реверс.avif,10r-2016-belgorodskaya-oblast-reverse
 Великие Луки аверс.avif,10r-2016-velikie-luki-pskovskaya-oblast-obverse
 Великие Луки реверс.avif,10r-2016-velikie-luki-pskovskaya-oblast-reverse
-Вязьма аверс.avif,10r-2019-g-vyazma-smolenskaya-oblast-obverse
-Вязьма реверс.avif,10r-2019-g-vyazma-smolenskaya-oblast-reverse
+Вязьма аверс.avif,10r-2013-vyazma-obverse
+Вязьма реверс.avif,10r-2013-vyazma-reverse
 Городец аверс.avif,10r-2022-g-gorodets-nizhegorodskaya-oblast-obverse
 Городец реврес.avif,10r-2022-g-gorodets-nizhegorodskaya-oblast-reverse
 Гороховец аверс.avif,10r-2018-g-gorokhovets-vladimirskaya-oblast-1168-g-obverse
@@ -232,8 +232,8 @@ filename,out_stem
 Карачаево-Черкесская Республика реверс.avif,10r-2022-karachaevo-cherkesskaya-respublika-reverse
 Клин аверс.avif,10r-2019-g-klin-moskovskaya-oblast-obverse
 Клин реверс.avif,10r-2019-g-klin-moskovskaya-oblast-reverse
-Козельск аверс.avif,10r-2020-g-kozelsk-kaluzhskaya-oblast-obverse
-Козельск реверс.avif,10r-2020-g-kozelsk-kaluzhskaya-oblast-reverse
+Козельск аверс.avif,10r-2013-kozelsk-obverse
+Козельск реверс.avif,10r-2013-kozelsk-reverse
 Костромская область аверс.avif,10r-2019-kostromskaya-oblast-obverse
 Костромская область реврес.avif,10r-2019-kostromskaya-oblast-reverse
 Курганская область аверс.avif,10r-2018-kurganskaya-oblast-obverse
@@ -254,8 +254,8 @@ filename,out_stem
 Омская область реверс.avif,10r-2023-omskaya-oblast-reverse
 Освобождение мира от фашизма аверс.avif,10r-2015-osvobozhdenie-mira-ot-fashizma-obverse
 Освобождение мира от фашизма реверс.avif,10r-2015-osvobozhdenie-mira-ot-fashizma-reverse
-Ржев аверс.avif,10r-2016-rzhev-tverskaya-oblast-obverse
-Ржев реверс.avif,10r-2016-rzhev-tverskaya-oblast-reverse
+Ржев аверс.avif,10r-2011-rzhev-obverse
+Ржев реверс.avif,10r-2011-rzhev-reverse
 Рыбинск аверс.avif,10r-2023-g-rybinsk-yaroslavskaya-oblast-obverse
 Рыбинск реверс.avif,10r-2023-g-rybinsk-yaroslavskaya-oblast-reverse
 Рыльск аверс.avif,10r-2022-g-rylsk-kurskaya-oblast-obverse
@@ -286,3 +286,166 @@ filename,out_stem
 Челябинская область реверс.avif,10r-2014-chelyabinskaya-oblast-reverse
 Эмблема 70-летия Победы аверс.avif,10r-2015-emblema-70-letiya-pobedy-obverse
 Эмблема 70-летия Победы реверс.avif,10r-2015-emblema-70-letiya-pobedy-reverse
+1150-летие зарождения российской государственности аверс.avif,10r-2012-1150-letie-zarozhdeniya-rossiyskoy-gosudarstvennosti-obverse
+1150-летие зарождения российской государственности реверс.avif,10r-2012-1150-letie-zarozhdeniya-rossiyskoy-gosudarstvennosti-reverse
+20-летие принятия Конституции Российской Федерации аверс.jpg,10r-2013-20-letie-prinyatiya-konstitutsii-rossiyskoy-federatsii-obverse
+20-летие принятия Конституции Российской Федерации реверс.jpg,10r-2013-20-letie-prinyatiya-konstitutsii-rossiyskoy-federatsii-reverse
+200-летие победы России в Отечественной войне 1812 года (арка) аверс.jpg,10r-2012-200-letie-pobedy-rossii-v-otechestvennoy-voyne-1812-goda-obverse
+200-летие победы России в Отечественной войне 1812 года (арка) реверс.jpg,10r-2012-200-letie-pobedy-rossii-v-otechestvennoy-voyne-1812-goda-reverse
+50 лет первого полета человека в космос аверс.jpg,10r-2011-50-let-pervogo-poleta-cheloveka-v-kosmos-obverse
+50 лет первого полета человека в космос реверс.jpg,10r-2011-50-let-pervogo-poleta-cheloveka-v-kosmos-reverse
+70-летие Сталинградской битве аверс.jpg,10r-2013-70-letie-razgroma-sovetskimi-voyskami-nemetsko-fashistskikh-voysk-v-stalingradskoy-bitve-obverse
+70-летие Сталинградской битве реверс.jpg,10r-2013-70-letie-razgroma-sovetskimi-voyskami-nemetsko-fashistskikh-voysk-v-stalingradskoy-bitve-reverse
+Анапа аверс.avif,10r-2014-anapa-obverse
+Анапа реверс.avif,10r-2014-anapa-reverse
+Архангельск аверс.avif,10r-2013-arkhangelsk-obverse
+Архангельск реверс.avif,10r-2013-arkhangelsk-reverse
+Белгород аверс.avif,10r-2011-belgorod-spmd-obverse
+Белгород реверс.avif,10r-2011-belgorod-spmd-reverse
+Боровичи аверс.avif,10r-2021-borovichi-obverse
+Боровичи реверс.avif,10r-2021-borovichi-reverse
+Брянск аверс.jpg,10r-2013-bryansk-obverse
+Брянск реверс.jpg,10r-2013-bryansk-reverse
+Великие Луки аверс.jpg,10r-2012-velikie-luki-obverse
+Великие Луки реверс.jpg,10r-2012-velikie-luki-reverse
+Великий Новгород аверс.jpg,10r-2012-velikiy-novgorod-obverse
+Великий Новгород реверс.jpg,10r-2012-velikiy-novgorod-reverse
+Владивосток аверс.jpg,10r-2014-vladivostok-obverse
+Владивосток реверс.jpg,10r-2014-vladivostok-reverse
+Владикавказ аверс.avif,10r-2011-vladikavkaz-obverse
+Владикавказ реверс.avif,10r-2011-vladikavkaz-reverse
+Волоколамск аверс.avif,10r-2013-volokolamsk-obverse
+Волоколамск реверс.avif,10r-2013-volokolamsk-reverse
+Воронеж аверс.jpg,10r-2012-voronezh-obverse
+Воронеж реверс.jpg,10r-2012-voronezh-reverse
+Выборг аверс.jpg,10r-2014-vyborg-obverse
+Выборг реверс.jpg,10r-2014-vyborg-reverse
+Гатчина аверс.avif,10r-2016-gatchina-obverse
+Гатчина реверс.avif,10r-2016-gatchina-reverse
+Города трудовой доблести - Иваново аверс.jpg,10r-2021-ivanovo-obverse
+Города трудовой доблести - Иваново реверс.jpg,10r-2021-ivanovo-reverse
+Города трудовой доблести - Новокузнецк аверс.jpg,10r-2023-novokuznetsk-obverse
+Города трудовой доблести - Новокузнецк реверс.jpg,10r-2023-novokuznetsk-reverse
+Города трудовой доблести - Омск аверс.jpg,10r-2021-omsk-obverse
+Города трудовой доблести - Омск реверс.jpg,10r-2021-omsk-reverse
+Города трудовой доблести - Уфа аверс.jpg,10r-2025-ufa-obverse
+Города трудовой доблести - Уфа реверс.jpg,10r-2025-ufa-reverse
+Города трудовой доблести - Челябинск аверс.jpg,10r-2025-chelyabinsk-obverse
+Города трудовой доблести - Челябинск реверс.jpg,10r-2025-chelyabinsk-reverse
+Города трудовой доблести - Ярославль аверс.jpg,10r-2025-yaroslavl-obverse
+Города трудовой доблести - Ярославль реверс.jpg,10r-2025-yaroslavl-reverse
+Грозный аверс.avif,10r-2015-groznyy-obverse
+Грозный реверс.avif,10r-2015-groznyy-reverse
+Дмитров аверс.jpg,10r-2012-dmitrov-obverse
+Дмитров реверс.jpg,10r-2012-dmitrov-reverse
+Екатеринбург аверс.avif,10r-2021-ekaterinburg-obverse
+Екатеринбург реверс.avif,10r-2021-ekaterinburg-reverse
+Ельня аверс.avif,10r-2011-elnya-obverse
+Ельня реверс.avif,10r-2011-elnya-reverse
+Ижевск аверс.avif,10r-2022-izhevsk-obverse
+Ижевск реверс.avif,10r-2022-izhevsk-reverse
+Иркутск аверс.avif,10r-2022-irkutsk-obverse
+Иркутск реверс.avif,10r-2022-irkutsk-reverse
+Казань аверс.avif,10r-2022-kazan-obverse
+Казань реверс.avif,10r-2022-kazan-reverse
+Калач-на-Дону аверс.jpg,10r-2015-kalach-na-donu-obverse
+Калач-на-Дону реверс.jpg,10r-2015-kalach-na-donu-reverse
+Ковров аверс.jpg,10r-2015-kovrov-obverse
+Ковров реверс.jpg,10r-2015-kovrov-reverse
+Колпино аверс.avif,10r-2014-kolpino-obverse
+Колпино реверс.avif,10r-2014-kolpino-reverse
+Кронштадт аверс.avif,10r-2013-kronshtadt-obverse
+Кронштадт реверс.avif,10r-2013-kronshtadt-reverse
+Крым аверс.avif,10r-2014-vkhozhdenie-v-sostav-rossiyskoy-federatsii-respubliki-krym-i-goroda-federalnogo-znacheniya-sevastopolya-obverse
+Крым реверс.avif,10r-2014-vkhozhdenie-v-sostav-rossiyskoy-federatsii-respubliki-krym-i-goroda-federalnogo-znacheniya-sevastopolya-reverse
+Курск аверс.avif,10r-2011-kursk-obverse
+Курск реверс.avif,10r-2011-kursk-reverse
+Логотип Универсиады аверс.avif,10r-2013-logotip-i-emblema-universiady-obverse
+Логотип Универсиады в Красноярске аверс.avif,10r-2018-logotip-universiady-v-krasnoyarske-obverse
+Логотип Универсиады в Красноярске реверс.avif,10r-2018-logotip-universiady-v-krasnoyarske-reverse
+Логотип Универсиады реверс.avif,10r-2013-logotip-i-emblema-universiady-reverse
+Ломоносов аверс.jpg,10r-2015-lomonosov-obverse
+Ломоносов реверс.jpg,10r-2015-lomonosov-reverse
+Луга аверс.jpg,10r-2012-luga-obverse
+Луга реверс.jpg,10r-2012-luga-reverse
+Магнитогорск аверс.avif,10r-2022-magnitogorsk-obverse
+Магнитогорск реверс.avif,10r-2022-magnitogorsk-reverse
+Малгобек аверс.avif,10r-2011-malgobek-obverse
+Малгобек реверс.avif,10r-2011-malgobek-reverse
+Малоярославец аверс.avif,10r-2015-maloyaroslavets-obverse
+Малоярославец реверс.avif,10r-2015-maloyaroslavets-reverse
+Можайск аверс.avif,10r-2015-mozhaysk-obverse
+Можайск реверс.avif,10r-2015-mozhaysk-reverse
+Нальчик аверс.avif,10r-2014-nalchik-obverse
+Нальчик реверс.avif,10r-2014-nalchik-reverse
+Наро-Фоминск аверс.avif,10r-2013-naro-fominsk-obverse
+Наро-Фоминск реверс.avif,10r-2013-naro-fominsk-reverse
+Нижний Новгород аверс.png,10r-2023-nizhniy-novgorod-obverse
+Нижний Новгород реверс.png,10r-2023-nizhniy-novgorod-reverse
+Нижний Тагил аверс.png,10r-2023-nizhniy-tagil-obverse
+Нижний Тагил реверс.png,10r-2023-nizhniy-tagil-reverse
+Новосибирск аверс.avif,10r-2023-novosibirsk-obverse
+Новосибирск аверс.jpg,10r-2023-novosibirsk-obverse
+Новосибирск реверс.jpg,10r-2023-novosibirsk-reverse
+Орёл аверс.avif,10r-2011-orel-obverse
+Орёл реверс.avif,10r-2011-orel-reverse
+Пермь аверс.png,10r-2024-perm-obverse
+Пермь реверс.png,10r-2024-perm-reverse
+Петрозаводск аверс.avif,10r-2016-petrozavodsk-obverse
+Петрозаводск реверс.avif,10r-2016-petrozavodsk-reverse
+Петропавловск-Камчатский аверс.jpg,10r-2015-petropavlovsk-kamchatskiy-obverse
+Петропавловск-Камчатский реверс.jpg,10r-2015-petropavlovsk-kamchatskiy-reverse
+Полярный аверс.jpg,10r-2012-polyarnyy-obverse
+Полярный реверс.jpg,10r-2012-polyarnyy-reverse
+Псков аверс.avif,10r-2013-pskov-obverse
+Псков реверс.avif,10r-2013-pskov-reverse
+Работник нефтегазовой отрасли аверс.avif,10r-2021-rabotnik-neftegazovoy-otrasli-obverse
+Работник нефтегазовой отрасли реверс.avif,10r-2021-rabotnik-neftegazovoy-otrasli-reverse
+Работник строительной сферы аверс.avif,10r-2023-rabotnik-stroitelnoy-sfery-obverse
+Работник строительной сферы реверс.avif,10r-2023-rabotnik-stroitelnoy-sfery-reverse
+Ростов-на-Дону аверс.jpg,10r-2012-rostov-na-donu-obverse
+Ростов-на-Дону реверс.jpg,10r-2012-rostov-na-donu-reverse
+Самара аверс.png,10r-2024-samara-obverse
+Самара реверс.png,10r-2024-samara-reverse
+Саратов аверс.png,10r-2024-saratov-obverse
+Саратов реверс.png,10r-2024-saratov-reverse
+Севастополь аверс.avif,10r-2014-sevastopol-obverse
+Севастополь реверс.avif,10r-2014-sevastopol-reverse
+Старая Русса аверс.jpg,10r-2016-staraya-russa-obverse
+Старая Русса реверс.jpg,10r-2016-staraya-russa-reverse
+Старый Оскол аверс.avif,10r-2014-staryy-oskol-obverse
+Старый Оскол реверс.avif,10r-2014-staryy-oskol-reverse
+Таганрог аверс.avif,10r-2015-taganrog-obverse
+Таганрог реверс.avif,10r-2015-taganrog-reverse
+Талисман Универсиады аверс.jpg,10r-2013-talisman-universiady-obverse
+Талисман Универсиады в Красноярске аверс.avif,10r-2018-talisman-universiady-v-krasnoyarske-obverse
+Талисман Универсиады в Красноярске реверс.avif,10r-2018-talisman-universiady-v-krasnoyarske-reverse
+Талисман Универсиады реверс.jpg,10r-2013-talisman-universiady-reverse
+Тверь аверс.jpg,10r-2014-tver-spmd-obverse
+Тверь реверс.jpg,10r-2014-tver-spmd-reverse
+Тихвин аверс.jpg,10r-2014-tikhvin-obverse
+Тихвин реверс.jpg,10r-2014-tikhvin-reverse
+Томск аверс.png,10r-2024-tomsk-obverse
+Томск реверс.png,10r-2024-tomsk-reverse
+Туапсе аверс.jpg,10r-2012-tuapse-obverse
+Туапсе реверс.jpg,10r-2012-tuapse-reverse
+Ульяновск аверс.avif,10r-2025-ulyanovsk-obverse
+Ульяновск реверс.avif,10r-2025-ulyanovsk-reverse
+Уфа аверс.avif,10r-2014-ufa-obverse
+Уфа реверс.avif,10r-2014-ufa-reverse
+Учитель аверс.avif,10r-2024-uchitel-obverse
+Учитель реверс.avif,10r-2024-uchitel-reverse
+Феодосия аверс.avif,10r-2016-feodosiya-obverse
+Феодосия реверс.avif,10r-2016-feodosiya-reverse
+Хабаровск аверс.jpg,10r-2015-khabarovsk-obverse
+Хабаровск реверс.jpg,10r-2015-khabarovsk-reverse
+Человек труда - Работник добывающей промышленности аверс.jpg,10r-2022-rabotnik-dobyvayushchey-promyshlennosti-obverse
+Человек труда - Работник добывающей промышленности реверс.jpg,10r-2022-rabotnik-dobyvayushchey-promyshlennosti-reverse
+Человек труда - Работник металлургической промышленности (металлург) аверс.jpg,10r-2020-rabotnik-metallurgicheskoy-promyshlennosti-obverse
+Человек труда - Работник металлургической промышленности (металлург) реверс.jpg,10r-2020-rabotnik-metallurgicheskoy-promyshlennosti-reverse
+Человек труда - Работник сельского хозяйства и перерабатывающей промышленности аверс.jpg,10r-2025-rabotnik-selskogo-khozyaystva-i-pererabatyvayushchey-promyshlennosti-obverse
+Человек труда - Работник сельского хозяйства и перерабатывающей промышленности реверс.jpg,10r-2025-rabotnik-selskogo-khozyaystva-i-pererabatyvayushchey-promyshlennosti-reverse
+Человек труда - Работник транспортной сферы аверс.jpg,10r-2020-rabotnik-transportnoy-sfery-obverse
+Человек труда - Работник транспортной сферы реверс.jpg,10r-2020-rabotnik-transportnoy-sfery-reverse
+Эмблема 65-летия Победы аверс.avif,10r-2010-ofitsialnaya-emblema-65-letiya-pobedy-obverse
+Эмблема 65-летия Победы реверс.avif,10r-2010-ofitsialnaya-emblema-65-letiya-pobedy-reverse

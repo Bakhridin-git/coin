@@ -230,11 +230,17 @@ async function main() {
       }
     }
 
-    await sharp(inputPath)
+    let pipeline = sharp(inputPath)
       .extract({ left, top, width: sideLen, height: sideLen })
-      .resize(SIZE, SIZE, { fit: 'fill' })
-      .jpeg({ quality: JPEG_QUALITY, mozjpeg: true })
-      .toFile(outputPath);
+      .resize(SIZE, SIZE, { fit: 'fill' });
+
+    // PNG/WEBP/AVIF can have transparency; JPEG can't.
+    // Without flatten(), transparent pixels may become black.
+    if (meta.hasAlpha) {
+      pipeline = pipeline.flatten({ background: { r: 255, g: 255, b: 255 } });
+    }
+
+    await pipeline.jpeg({ quality: JPEG_QUALITY, mozjpeg: true }).toFile(outputPath);
 
     rows.push(
       `${index},"${name.replace(/"/g, '""')}","${outName}","${slugOut}","${sideOut}"`

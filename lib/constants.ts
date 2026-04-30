@@ -1,5 +1,13 @@
 export const COIN_IMAGE_BASE_PATH = '/images/coins' as const;
 
+/** Заглушка, когда реального изображения монеты нет в `public/images/coins`. */
+export const COIN_IMAGE_PLACEHOLDER_SRC = '/images/coin-placeholder.svg' as const;
+
+/** Имена переменных окружения проекта (без magic strings). */
+export const ENV = {
+  hideCoinsWithoutImages: 'HIDE_COINS_WITHOUT_IMAGES'
+} as const;
+
 /**
  * Ключи query-string каталога. Вынесены сюда, чтобы `categoryTree` и другие
  * модули не тянули `lib/catalog.ts` (тяжёлый граф → риск циклов и ошибок Webpack).
