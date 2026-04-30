@@ -1,0 +1,66 @@
+/* Loading UI for catalog routes (root + /period/*). */
+
+.catalog-scope .catalog-loading-wrap {
+  position: relative;
+  border-radius: 16px;
+  /* Лоудер должен быть визуально по центру экрана, но только в области монет.
+   * Поэтому даём контейнеру “почти viewport” высоту (шапка/фильтры остаются вне оверлея). */
+  min-height: 65vh;
+  min-height: calc(100dvh - 320px);
+}
+
+.catalog-scope .catalog-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(245, 244, 240, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+}
+
+.catalog-scope .catalog-loading-dots {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 10px);
+  grid-template-rows: repeat(3, 10px);
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+}
+
+.catalog-scope .catalog-loading-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(26, 26, 46, 0.22);
+  animation: catalog-dot 1.15s ease-in-out infinite;
+}
+
+.catalog-scope .catalog-loading-dot.is-strong {
+  background: rgba(26, 26, 46, 0.55);
+}
+
+.catalog-scope .catalog-loading-dot:nth-child(1) { animation-delay: 0ms; }
+.catalog-scope .catalog-loading-dot:nth-child(2) { animation-delay: 90ms; }
+.catalog-scope .catalog-loading-dot:nth-child(3) { animation-delay: 180ms; }
+.catalog-scope .catalog-loading-dot:nth-child(4) { animation-delay: 270ms; }
+.catalog-scope .catalog-loading-dot:nth-child(5) { animation-delay: 360ms; }
+.catalog-scope .catalog-loading-dot:nth-child(6) { animation-delay: 450ms; }
+.catalog-scope .catalog-loading-dot:nth-child(7) { animation-delay: 540ms; }
+.catalog-scope .catalog-loading-dot:nth-child(8) { animation-delay: 630ms; }
+.catalog-scope .catalog-loading-dot:nth-child(9) { animation-delay: 720ms; }
+
+@keyframes catalog-dot {
+  0% { transform: scale(0.85); opacity: 0.55; }
+  40% { transform: scale(1.2); opacity: 1; }
+  80% { transform: scale(0.85); opacity: 0.55; }
+}
+
