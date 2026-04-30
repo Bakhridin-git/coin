@@ -173,11 +173,16 @@ function CatalogPageClientInner({
   );
 
   useEffect(() => {
+    const prev = document.body.style.overflow;
     if (filtersOpen || sortOpen) {
       document.body.style.overflow = 'hidden';
-      return;
+    } else {
+      document.body.style.overflow = '';
     }
-    document.body.style.overflow = '';
+    return () => {
+      // На навигации компонент размонтируется. Без cleanup скролл может остаться заблокированным.
+      document.body.style.overflow = prev;
+    };
   }, [filtersOpen, sortOpen]);
 
   const openFilters = useCallback(() => {

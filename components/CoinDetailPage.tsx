@@ -96,8 +96,17 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
   const [flipped, setFlipped] = useState(false);
   const [activeThumb, setActiveThumb] = useState<'reverse' | 'obverse'>('reverse');
   const [grade, setGrade] = useState<GradeId>('MS-63');
+  const [isMobile, setIsMobile] = useState(false);
 
   const flipLabel = flipped ? 'Аверс' : 'Реверс';
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   const prices = useMemo(
     () =>
@@ -169,6 +178,10 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
     setActiveThumb((v) => (v === 'reverse' ? 'obverse' : 'reverse'));
   };
 
+  // Mobile perf: do not download/decode both sides immediately.
+  const shouldLoadObverse = !isMobile || flipped || activeThumb === 'obverse';
+  const imageSizes = '(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 600px';
+
   return (
     <>
       <div className="main">
@@ -197,10 +210,28 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
             <div ref={flipBoxRef} className={flipped ? 'flip-container flipped' : 'flip-container'} onClick={onFlip}>
               <div className="flip-inner">
                 <div className="flip-front">
-                  <Image src={coin.images.reverse} alt={`Реверс — ${coin.name}`} width={900} height={900} />
+                  <Image
+                    src={coin.images.reverse}
+                    alt={`Реверс — ${coin.name}`}
+                    width={900}
+                    height={900}
+                    priority
+                    sizes={imageSizes}
+                  />
                 </div>
                 <div className="flip-back">
-                  <Image src={coin.images.obverse} alt={`Аверс — ${coin.name}`} width={900} height={900} />
+                  {shouldLoadObverse ? (
+                    <Image
+                      src={coin.images.obverse}
+                      alt={`Аверс — ${coin.name}`}
+                      width={900}
+                      height={900}
+                      loading="lazy"
+                      sizes={imageSizes}
+                    />
+                  ) : (
+                    <div aria-hidden="true" style={{ width: '100%', height: '100%', background: 'transparent' }} />
+                  )}
                 </div>
               </div>
               <span className="flip-label">{flipLabel}</span>
@@ -219,28 +250,46 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
               ↻ Перевернуть монету
             </button>
 
-            <div className="thumbnails">
-              <div
-                className={activeThumb === 'reverse' ? 'thumb active' : 'thumb'}
-                onClick={() => {
-                  setFlipped(false);
-                  setActiveThumb('reverse');
-                }}
-              >
-                <Image src={coin.images.reverse} alt="Реверс" width={600} height={600} />
-                <span className="thumb-label">Реверс</span>
+            {!isMobile && (
+              <div className="thumbnails">
+                <div
+                  className={activeThumb === 'reverse' ? 'thumb active' : 'thumb'}
+                  onClick={() => {
+                    setFlipped(false);
+                    setActiveThumb('reverse');
+                  }}
+                >
+                  <Image
+                    src={coin.images.reverse}
+                    alt="Реверс"
+                    width={600}
+                    height={600}
+                    loading="lazy"
+                    sizes="228px"
+                  />
+                  <span className="thumb-label">Реверс</span>
+                </div>
+                <div
+                  className={activeThumb === 'obverse' ? 'thumb active' : 'thumb'}
+                  onClick={() => {
+                    setFlipped(true);
+                    setActiveThumb('obverse');
+                  }}
+                >
+                  {shouldLoadObverse && (
+                    <Image
+                      src={coin.images.obverse}
+                      alt="Аверс"
+                      width={600}
+                      height={600}
+                      loading="lazy"
+                      sizes="228px"
+                    />
+                  )}
+                  <span className="thumb-label">Аверс</span>
+                </div>
               </div>
-              <div
-                className={activeThumb === 'obverse' ? 'thumb active' : 'thumb'}
-                onClick={() => {
-                  setFlipped(true);
-                  setActiveThumb('obverse');
-                }}
-              >
-                <Image src={coin.images.obverse} alt="Аверс" width={600} height={600} />
-                <span className="thumb-label">Аверс</span>
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="coin-info">
@@ -368,14 +417,23 @@ export function CoinDetailPage({ coin, similarCoins }: CoinDetailPageProps) {
               )}
             </div>
             <div className="similar-coins-grid">
-              {similarCoins.slice(0, 8).map((c) => {
+              {(isMobile ? similarCoins.slice(0, 6) : similarCoins.slice(0, 8)).map((c) => {
                 const cSeries = getCanonicalSeries(c);
                 const cTitle = formatCoinTitle(c);
                 return (
                   <Link key={c.slug} href={`/coins/${c.slug}`} className="similar-coin-card">
-                    <div className="similar-coin-image">
-                      <Image src={c.images.reverse} alt={`Реверс — ${cTitle}`} width={600} height={600} />
-                    </div>
+                    {!isMobile && (
+                      <div className="similar-coin-image">
+                        <Image
+                          src={c.images.reverse}
+                          alt={`Реверс — ${cTitle}`}
+                          width={600}
+                          height={600}
+                          loading="lazy"
+                          sizes="160px"
+                        />
+                      </div>
+                    )}
                     <div className="similar-coin-body">
                       {cSeries && <span className="similar-coin-series">{cSeries.label}</span>}
                       <div className="similar-coin-name">{cTitle}</div>
