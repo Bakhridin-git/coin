@@ -1,4 +1,4 @@
-import { access, readFile, stat } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { Coin, DenominationUnit } from '../types';
 
@@ -9,23 +9,46 @@ function isEnoent(e: unknown): e is NodeJS.ErrnoException {
 /** Кэш при отсутствии CSV — отличается от любого реального mtime. */
 const MTIME_MISSING_CSV = -1;
 
+type ImageIndex = {
+  dirMtimeMs: number;
+  /** Filenames inside `/public/images/coins` */
+  files: ReadonlySet<string>;
+};
+
+let cachedImageIndex: ImageIndex | null = null;
+
+async function getImageIndex(): Promise<ImageIndex> {
+  const dirFs = path.join(process.cwd(), 'public', 'images', 'coins');
+  let st: Awaited<ReturnType<typeof stat>>;
+  try {
+    st = await stat(dirFs);
+  } catch (e) {
+    if (!isEnoent(e)) throw e;
+    // No folder (or not mounted) — fallback to placeholder.
+    return { dirMtimeMs: MTIME_MISSING_CSV, files: new Set<string>() };
+  }
+
+  if (cachedImageIndex && cachedImageIndex.dirMtimeMs === st.mtimeMs) return cachedImageIndex;
+
+  const names = await readdir(dirFs);
+  cachedImageIndex = { dirMtimeMs: st.mtimeMs, files: new Set(names) };
+  return cachedImageIndex;
+}
+
 async function pickPublicImage(slug: string, side: 'obverse' | 'reverse'): Promise<string> {
-  const baseFs = path.join(process.cwd(), 'public', 'images', 'coins');
   const basePublic = `/images/coins/${slug}-${side}`;
+  const idx = await getImageIndex();
+
+  // Project convention is JPG; keep legacy fallbacks, but without per-coin fs.access().
   const candidates = [
-    { fs: path.join(baseFs, `${slug}-${side}.jpg`), public: `${basePublic}.jpg` },
-    { fs: path.join(baseFs, `${slug}-${side}.jpeg`), public: `${basePublic}.jpeg` },
-    { fs: path.join(baseFs, `${slug}-${side}.webp`), public: `${basePublic}.webp` },
-    { fs: path.join(baseFs, `${slug}-${side}.png`), public: `${basePublic}.png` }
+    `${slug}-${side}.jpg`,
+    `${slug}-${side}.jpeg`,
+    `${slug}-${side}.webp`,
+    `${slug}-${side}.png`
   ];
 
-  for (const c of candidates) {
-    try {
-      await access(c.fs);
-      return c.public;
-    } catch {
-      // continue
-    }
+  for (const filename of candidates) {
+    if (idx.files.has(filename)) return `${basePublic}${path.extname(filename)}`;
   }
 
   return '/images/coin-placeholder.svg';
@@ -95,6 +118,7 @@ function parseDenominationUnit(raw: string | undefined): DenominationUnit {
 
 let cached: Coin[] | null = null;
 let cachedMtimeMs = 0;
+let cachedImagesDirMtimeMs = -2;
 
 export async function getCoins(): Promise<Coin[]> {
   const csvPath = path.join(process.cwd(), 'data', 'coins.csv');
@@ -110,7 +134,13 @@ export async function getCoins(): Promise<Coin[]> {
     return cached;
   }
 
-  /** Без инвалидации по папке с JPEG кэш «залипал» на заглушках после добавления файлов. */
+  // Invalidate cache not only by CSV mtime, but also by the images folder state.
+  const idx = await getImageIndex();
+  if (cached !== null && st.mtimeMs === cachedMtimeMs && idx.dirMtimeMs === cachedImagesDirMtimeMs) {
+    return cached;
+  }
+
+  /** CSV не менялся, но могли добавиться картинки — переприсваиваем URLs быстро из индекса. */
   if (cached !== null && st.mtimeMs === cachedMtimeMs) {
     return Promise.all(
       cached.map(async (c) => ({
@@ -215,6 +245,7 @@ export async function getCoins(): Promise<Coin[]> {
 
   cached = withImages;
   cachedMtimeMs = st.mtimeMs;
+  cachedImagesDirMtimeMs = idx.dirMtimeMs;
   return withImages;
 }
 
