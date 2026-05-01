@@ -93,20 +93,49 @@ function splitCsvLine(line) {
  * filename,out_stem — out_stem без .jpg (полное имя вида 10r-…-obverse).
  * @returns {Map<string, string>}
  */
+/**
+ * Одна строка filename,stem; filename может быть в кавычках, если внутри есть запятая («Ну, погоди! …»).
+ */
+function parseFileMapLine(line) {
+  const trimmed = line.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith('"')) {
+    let i = 1;
+    let filename = '';
+    while (i < trimmed.length) {
+      const ch = trimmed[i];
+      if (ch === '"') {
+        if (trimmed[i + 1] === '"') {
+          filename += '"';
+          i += 2;
+          continue;
+        }
+        break;
+      }
+      filename += ch;
+      i += 1;
+    }
+    if (trimmed[i] !== '"' || trimmed[i + 1] !== ',') return null;
+    const stem = trimmed.slice(i + 2).trim();
+    return stem ? { filename, stem } : null;
+  }
+  const comma = trimmed.indexOf(',');
+  if (comma < 0) return null;
+  let filename = trimmed.slice(0, comma).trim();
+  let stem = trimmed.slice(comma + 1).trim();
+  if (filename.startsWith('"') && filename.endsWith('"')) filename = filename.slice(1, -1).replace(/""/g, '"');
+  if (stem.startsWith('"') && stem.endsWith('"')) stem = stem.slice(1, -1).replace(/""/g, '"');
+  return filename && stem ? { filename, stem } : null;
+}
+
 function parseFileMap(csvText) {
   const lines = csvText.trim().split(/\r?\n/).filter(Boolean);
   if (lines.length < 2) return new Map();
   /** @type {Map<string, string>} */
   const map = new Map();
   for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    const comma = line.indexOf(',');
-    if (comma < 0) continue;
-    let filename = line.slice(0, comma).trim();
-    let stem = line.slice(comma + 1).trim();
-    if (filename.startsWith('"') && filename.endsWith('"')) filename = filename.slice(1, -1).replace(/""/g, '"');
-    if (stem.startsWith('"') && stem.endsWith('"')) stem = stem.slice(1, -1).replace(/""/g, '"');
-    if (filename && stem) map.set(filename, stem);
+    const parsed = parseFileMapLine(lines[i]);
+    if (parsed) map.set(parsed.filename, parsed.stem);
   }
   return map;
 }

@@ -52,7 +52,10 @@ const SERIES_RULES: readonly SeriesRule[] = [
       label: 'ГВС и аналогичные (10р)',
       h1: '10 рублей «Города воинской славы» и «Города трудовой доблести»'
     },
-    rawSlugs: ['goroda-voinskoy-slavy', 'goroda-slavy', 'goroda-trudovoy-doblesti', 'chelovek-truda']
+    rawSlugs: ['goroda-voinskoy-slavy', 'goroda-slavy', 'goroda-trudovoy-doblesti', 'chelovek-truda'],
+    /** 10₽ сталь/латунь (эмблема 65-летия Победы и др.) в CSV могут быть в `sobytiya`, не только в сериях ГВС/ГТД. */
+    match: (c) =>
+      c.denomination === 10 && c.denominationUnit === 'рубль' && c.material === 'gvs'
   },
   {
     series: {

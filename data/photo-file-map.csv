@@ -16,8 +16,8 @@ filename,out_stem
 Дербент — реверс.jpg,10r-2002-derbent-reverse
 Дмитров — аверс.png,10r-2004-dmitrov-obverse
 Дмитров — реверс.png,10r-2004-dmitrov-reverse
-Дорогобуж — аверс.jpg,10r-2003-dorogobuzh-obverse
-Дорогобуж — реверс.jpg,10r-2003-dorogobuzh-reverse
+Дорогобуж аверс.avif,10r-2003-dorogobuzh-obverse
+Дорогобуж реверс.avif,10r-2003-dorogobuzh-reverse
 Калининград — аверс.jpg,10r-2005-kaliningrad-obverse
 Калининград — реверс.avif,10r-2005-kaliningrad-reverse
 Кемь — аверс.png,10r-2004-kem-obverse
@@ -449,3 +449,64 @@ filename,out_stem
 Человек труда - Работник транспортной сферы реверс.jpg,10r-2020-rabotnik-transportnoy-sfery-reverse
 Эмблема 65-летия Победы аверс.avif,10r-2010-ofitsialnaya-emblema-65-letiya-pobedy-obverse
 Эмблема 65-летия Победы реверс.avif,10r-2010-ofitsialnaya-emblema-65-letiya-pobedy-reverse
+
+Барбоскины аверс цветная.avif,25r-2020-barboskiny-cvetnoe-reverse
+Барбоскины аверс.avif,25r-2020-barboskiny-reverse
+Барбоскины раверс.avif,25r-2020-barboskiny-obverse
+Барбоскины реверс цветная.avif,25r-2020-barboskiny-cvetnoe-obverse
+Бременские музыканты аверс цветная.avif,25r-2019-bremenskie-muzykanty-cvetnoe-obverse
+Бременские музыканты аверс.avif,25r-2019-bremenskie-muzykanty-obverse
+Бременские музыканты реверс цветная.avif,25r-2019-bremenskie-muzykanty-cvetnoe-reverse
+Бременские музыканты реверс.avif,25r-2019-bremenskie-muzykanty-reverse
+Весёлая карусель № 1 Антошка аверс цветная.avif,25r-2022-vesyolaya-karusel-1-antoshka-cvetnoe-obverse
+Весёлая карусель № 1 Антошка аверс.avif,25r-2022-veselaya-karusel-1-obverse
+Весёлая карусель № 1 Антошка реверс цветная.avif,25r-2022-vesyolaya-karusel-1-antoshka-cvetnoe-reverse
+Весёлая карусель № 1 Антошка реверс.avif,25r-2022-veselaya-karusel-1-reverse
+Винни-Пух аверс цветная.avif,25r-2017-vinni-pukh-mmd-reverse
+Винни-Пух аверс.avif,25r-2017-vinni-pukh-reverse
+Винни-Пух реверс цветная.avif,25r-2017-vinni-pukh-mmd-obverse
+Винни-Пух реверс.avif,25r-2017-vinni-pukh-obverse
+Дед Мороз и лето аверс цвентная.avif,25r-2019-ded-moroz-i-leto-cvetnoe-reverse
+Дед Мороз и лето аверс.avif,25r-2019-ded-moroz-i-leto-reverse
+Дед Мороз и лето раверс.avif,25r-2019-ded-moroz-i-leto-obverse
+Дед Мороз и лето реверс цветная.avif,25r-2019-ded-moroz-i-leto-cvetnoe-obverse
+Ёжик в тумане аверс цветная.avif,25r-2024-yozhik-v-tumane-cvetnoe-obverse
+Ёжик в тумане аверс.avif,25r-2024-ezhik-v-tumane-obverse
+Ёжик в тумане реверс цветная.avif,25r-2024-yozhik-v-tumane-cvetnoe-reverse
+Ёжик в тумане реверс.avif,25r-2024-ezhik-v-tumane-reverse
+Иван Царевич и Серый Волк аверс цветная.avif,25r-2022-ivan-tsarevich-i-seryy-volk-cvetnoe-obverse
+Иван Царевич и Серый Волк аверс.avif,25r-2022-ivan-tsarevich-i-seryy-volk-obverse
+Иван Царевич и Серый Волк реверс цветная.avif,25r-2022-ivan-tsarevich-i-seryy-volk-cvetnoe-reverse
+Иван Царевич и Серый Волк реверс.avif,25r-2022-ivan-tsarevich-i-seryy-volk-reverse
+Крокодил Гена аверс цветная.avif,25r-2020-krokodil-gena-cvetnoe-obverse
+Крокодил Гена аверс.avif,25r-2020-krokodil-gena-obverse
+Крокодил Гена реверс цветная.avif,25r-2020-krokodil-gena-cvetnoe-reverse
+Крокодил Гена реверс.avif,25r-2020-krokodil-gena-reverse
+Маша и Медведь аверс цветная.avif,25r-2021-masha-i-medved-cvetnoe-obverse
+Маша и Медведь аверс.avif,25r-2021-masha-i-medved-obverse
+Маша и Медведь реверс цветная.avif,25r-2021-masha-i-medved-cvetnoe-reverse
+Маша и Медведь реверс.avif,25r-2021-masha-i-medved-reverse
+"Ну, погоди! аверс цветная.avif",25r-2018-nu-pogodi-cvetnoe-reverse
+"Ну, погоди! аверс.avif",25r-2018-nu-pogodi-reverse
+"Ну, погоди! реверс цветная.avif",25r-2018-nu-pogodi-cvetnoe-obverse
+"Ну, погоди! реверс.avif",25r-2018-nu-pogodi-obverse
+Смешарики аверс цветная.avif,25r-2023-smeshariki-cvetnoe-obverse
+Смешарики аверс.avif,25r-2023-smeshariki-obverse
+Смешарики реверс цветная.avif,25r-2023-smeshariki-cvetnoe-reverse
+Смешарики реверс.avif,25r-2023-smeshariki-reverse
+Три богатыря аверс цветная.avif,25r-2017-tri-bogatyrya-v-spetsialnom-ispolnenii-obverse
+Три богатыря аверс.avif,25r-2017-tri-bogatyrya-obverse
+Три богатыря реверс цветная.avif,25r-2017-tri-bogatyrya-v-spetsialnom-ispolnenii-reverse
+Три богатыря реверс.avif,25r-2017-tri-bogatyrya-reverse
+Умка аверс цветная.avif,25r-2021-umka-cvetnoe-obverse
+Умка аверс.avif,25r-2021-umka-obverse
+Умка реверс цветная.avif,25r-2021-umka-cvetnoe-reverse
+Умка реверс.avif,25r-2021-umka-reverse
+Фиксики аверс цветная.avif,25r-2025-fiksiki-cvetnoe-obverse
+Фиксики аверс.avif,25r-2025-fiksiki-obverse
+Фиксики реверс цветная.avif,25r-2025-fiksiki-cvetnoe-reverse
+Фиксики реверс.avif,25r-2025-fiksiki-reverse
+Алёнький цветочек аверс цветная.avif,25r-2023-alyonkiy-tsvetochek-cvetnoe-reverse
+Алёнький цветочек аверс.avif,25r-2023-alenkiy-tsvetochek-reverse
+Алёнький цветочек раверс.avif,25r-2023-alenkiy-tsvetochek-obverse
+Алёнький цветочек реверс цветная.avif,25r-2023-alyonkiy-tsvetochek-cvetnoe-obverse
